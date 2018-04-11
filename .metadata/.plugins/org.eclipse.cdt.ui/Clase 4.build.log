@@ -1,0 +1,8 @@
+
+**** Build of configuration Debug for project Clase 4 ****
+
+/home/sama/tools/ti/ccsv7/utils/bin/gmake -k -j 4 all -O 
+ 
+gmake[1]: 'Clase 4.out' is up to date.
+
+**** Build Finished ****

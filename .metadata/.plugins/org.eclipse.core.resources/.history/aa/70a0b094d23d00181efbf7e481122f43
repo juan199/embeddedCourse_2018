@@ -1,0 +1,167 @@
+#include "msp.h"
+/**
+ * main.cpp
+ */
+
+   void DelayMs () {                // Aproximately 1 s
+        int l_iCOUNTER = 0;         // Check variable's name
+        while (l_iCOUNTER < 50000)  // cómo averiguamos el numero de ciclos por instruccioon para tener
+            // esta funcioon que sea de 1 s
+        {
+            l_iCOUNTER++;
+        }
+    }
+
+   void OnOffLed(){
+       P5-> OUT = BIT6;
+       P2-> OUT = BIT4 | BIT6;
+       DelayMs();
+       P5-> OUT = ~BIT6;
+       P2-> OUT = ~(BIT4 | BIT6);
+       DelayMs();
+}
+
+   void BlinkSetUp ()
+    {
+       OnOffLed();
+       OnOffLed();
+       OnOffLed();
+    }
+
+int contador = 0;
+
+int main(void)
+{
+
+    WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;     // Stop watchdog timer
+    P1-> IE = 0;
+
+    //  P5.6 Blue, P2.4 Green, P2.6 RED
+    P5-> OUT = ~BIT6;
+    P2-> OUT = ~(BIT4 | BIT6); // preguntar al profe que porqué P2OUT empieza sucio, siempre entonces es buena
+    // práctica limpiar las salidas?
+    P5-> DIR = BIT6;
+    P2-> DIR = BIT4 | BIT6;
+
+    BlinkSetUp();
+
+    //P4.6 J8, P6.5 J9 y P6.4 J10 LigthSensor
+    // p4.6 j8 GPIO
+    //p6.5 j9 I2C
+    //p6.4 j10 i2C
+
+    // Para el sensor de luz
+    P6-> DIR = 0;
+    P4-> DIR = 0;
+
+    // Para que reciban varas de periféricos
+    P6-> SEL1 = 1;
+    P4-> SEL1 = 1;
+
+    // Para habilitar escritura
+    //PMAP-> KEYID = 0x02D52;
+
+
+
+    //TIMER 32
+    /*
+    TIMER32_1->LOAD = 0x0002dce1; //~1 s --> a 3 Mhz en el clk, 187.5 kHz para cada cuenta
+    TIMER32_1->CONTROL = TIMER32_CONTROL_SIZE | TIMER32_CONTROL_PRESCALE_1 | TIMER32_CONTROL_MODE | TIMER32_CONTROL_IE | TIMER32_CONTROL_ENABLE;
+    NVIC_SetPriority(T32_INT1_IRQn,1);
+    NVIC_EnableIRQ(T32_INT1_IRQn);
+    */
+
+
+    // boton es el p3.5
+    P3-> DIR = ~BIT5;
+    P3-> REN = 1;
+    P3-> DS = 0;
+    P3-> SEL0 = 0;
+    P3-> SEL1 = 0;
+    P3-> IES = 0;
+    P3-> IFG = 0;
+    P3-> IE = 1;
+
+    NVIC_SetPriority(PORT3_IRQn,1);
+    NVIC_EnableIRQ(PORT3_IRQn);
+
+
+    // boton en el p1.1
+    P1-> DIR = 0;
+    P1-> REN = 1;
+    P1-> DS = 1;
+    P1-> SEL0 = 0;
+    P1-> SEL1 = 0;
+    P1-> IES = 1;
+    P1-> IFG = 0;
+    P1-> IE = 1;
+    //P1-> IFG = 1; // set interrupt flag
+
+    NVIC_SetPriority(PORT1_IRQn,1);
+    NVIC_EnableIRQ(PORT1_IRQn);
+
+    __enable_interrupt();
+    __enable_irq();
+
+    while(true){
+
+    }
+
+    return 0;
+}
+
+extern "C"
+{
+    void T32_INT1_IRQHandler(void)
+    {
+        __disable_irq();
+        TIMER32_1->INTCLR = 0U; // clear interrupt flag // preguntar al profe qué es ese OU
+        //P1->OUT ^= BIT0;
+        //OnOffLed();
+        if (contador == 0) {
+            P5-> OUT = BIT6;
+            contador = 1;
+        } else {
+            P5-> OUT = ~BIT6;
+            contador = 0;
+        }
+        //ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC; // Start
+        __enable_irq();
+        return;
+    }
+
+    void PORT1_IRQHandler (void)
+        {
+            __disable_irq();
+            P1-> IFG = 0; // clear interrupt flag
+            //P1->OUT ^= BIT0;
+            OnOffLed();
+            //P5-> OUT = BIT6;
+            //ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC; // Start
+            __enable_irq();
+            return;
+        }
+
+    void PORT3_IRQHandler (void)
+        {
+            __disable_irq();
+            P3-> IFG = 0; // clear interrupt flag
+            //P1->OUT ^= BIT0;
+            OnOffLed();
+            //P5-> OUT = BIT6;
+            //ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC; // Start
+            __enable_irq();
+            return;
+        }
+
+
+
+/*    void ADC14_IRQHandler(void)
+    {
+        __disable_irq();
+        ADC14Result = ADC14->MEM[0];
+        ADC14->CLRIFGR0 = ADC14_CLRIFGR0_CLRIFG0;
+        __enable_irq();
+        return;
+    }*/
+}
