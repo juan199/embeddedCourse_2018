@@ -1,0 +1,3 @@
+empezamos con un LED
+parpadeo 3 veces
+estado inicial

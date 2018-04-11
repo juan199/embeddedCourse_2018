@@ -170,3 +170,19 @@ Finished building target: "labo1.out"
  
 
 **** Build Finished ****
+
+**** Build of configuration Debug for project labo1 ****
+
+/home/sama/tools/ti/ccsv7/utils/bin/gmake -k -j 4 all -O 
+ 
+gmake[1]: 'labo1.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project labo1 ****
+
+/home/sama/tools/ti/ccsv7/utils/bin/gmake -k -j 4 all -O 
+ 
+gmake[1]: 'labo1.out' is up to date.
+
+**** Build Finished ****

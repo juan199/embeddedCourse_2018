@@ -42,9 +42,6 @@ void main(void)
     BlinkSetUp();
 
     //P4.6 J8, P6.5 J9 y P6.4 J10 LigthSensor
-    // p4.6 j8 GPIO
-    //p6.5 j9 I2C
-    //p6.4 j10 i2C
 
     // Para el sensor de luz
     P6-> DIR = 0;
@@ -57,8 +54,6 @@ void main(void)
     // Para habilitar escritura
     PMAP-> KEYID = 0x02D52;
     //PMAP-> P1 = 0;
-
-
 
 
 
