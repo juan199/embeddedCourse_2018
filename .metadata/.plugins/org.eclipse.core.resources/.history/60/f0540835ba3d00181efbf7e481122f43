@@ -38,6 +38,7 @@ void main(void)
     P5-> DIR = BIT6;
     P2-> DIR = BIT4 | BIT6;
 
+
     BlinkSetUp();
 
     //P4.6 J8, P6.5 J9 y P6.4 J10 LigthSensor
@@ -57,8 +58,13 @@ void main(void)
     PMAP-> KEYID = 0x02D52;
     //PMAP-> P1 = 0;
 
+
+
+
+
     int counter = 0;
     while(true){
         counter++;
     }
+
 }
