@@ -2,12 +2,14 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="TIMER32_CONTROL_PRESCALE_0" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="TIMER32_CONTROL_PRESCALE_0"/>
+			<item value="system"/>
 			<item value="disable_irq"/>
 			<item value="TIMER32_CONTROL"/>
 		</list>

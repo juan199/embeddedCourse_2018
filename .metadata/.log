@@ -2141,3 +2141,16 @@ Caused by: org.json.JSONException: Unknown module: DeviceDetector
 	at com.ti.cloudagent.communication.JSONInterface.access$000(JSONInterface.java:16)
 	at com.ti.cloudagent.communication.JSONInterface$1.run(JSONInterface.java:28)
 	... 1 more
+!SESSION 2018-04-13 19:15:49.257 -----------------------------------------------
+eclipse.buildId=4.6.0.I20160606-1100
+java.version=1.8.0_112
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product com.ti.ccstudio.branding.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product com.ti.ccstudio.branding.product
+
+!ENTRY com.ti.common.core 4 0 2018-04-13 19:15:54.096
+!MESSAGE path=ccs_base/DebugServer
+
+!ENTRY com.ti.common.core 4 0 2018-04-13 19:15:54.116
+!MESSAGE debugServerDir=/home/sama/tools/ti/ccsv7/ccs_base/DebugServer
