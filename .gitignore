@@ -1,7 +1,7 @@
 #directories and files to ignore
 RemoteSystemsTempFiles
-.jxbrowser-data
-.metadata
+/.jxbrowser-data/*
+/.metadata/*
 labo1/Debug
 labo1/targetConfigs
 labo1/msp432p401r.cmd
