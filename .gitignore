@@ -2,8 +2,12 @@
 RemoteSystemsTempFiles
 /.jxbrowser-data/*
 /.metadata/*
-labo1/Debug
-labo1/targetConfigs
+.metadata
+.metadata/
+/.metadata
+/.metadata/.plugins/*
+labo1/Debug/*
+labo1/targetConfigs/*
 labo1/msp432p401r.cmd
 labo1/startup_msp432p401r_ccs.c
 labo1/system_msp432p401r.c
