@@ -1,5 +1,4 @@
 // *********** MAIN.CPP ***********
-// testing
 
 #include "msp.h"
 
