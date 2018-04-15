@@ -27,7 +27,8 @@
        OnOffLed();
     }
 
-int contador = 0; // change variable's name
+uint16_t ADC14Result = 0U;
+uint16_t contador = 0; // change variable's name
 
 int main(void)
 {
@@ -52,7 +53,7 @@ int main(void)
 
     // To start using the light sensor
     P6-> DIR = 0;
-    P4-> DIR = 0;
+    P4-> DIR = ~BIT6;
 
     // To receive data from peripherals
     P6-> SEL1 = 1;
@@ -65,7 +66,7 @@ int main(void)
     // *********** TIMER 32 ***********
     // To use the timer 32
     /*
-    TIMER32_1->LOAD = 0x0002dce1; //~1 s --> a 3 Mhz en el clk, 187.5 kHz para cada cuenta
+    TIMER32_1->LOAD = 0x0002dce1; //~1 s --> a 3 MHz en el clk, 187.5 kHz para cada cuenta
     TIMER32_1->CONTROL = TIMER32_CONTROL_SIZE | TIMER32_CONTROL_PRESCALE_1 | TIMER32_CONTROL_MODE | TIMER32_CONTROL_IE | TIMER32_CONTROL_ENABLE;
     NVIC_SetPriority(T32_INT1_IRQn,1);
     NVIC_EnableIRQ(T32_INT1_IRQn);
@@ -73,6 +74,7 @@ int main(void)
 
     // *********** BUTTON ***********
     // The button is in the p3.5 pin
+    /*
     P3-> DIR = ~BIT5;
     P3-> REN = BIT5;
     P3-> OUT = BIT5;
@@ -101,6 +103,28 @@ int main(void)
 
     NVIC_SetPriority(PORT1_IRQn,1);
     NVIC_EnableIRQ(PORT1_IRQn);
+    */
+
+
+
+    // ******* Microphone *******
+    // It uses the pin J1.6 -> P4.3 to send data trough an analog In
+    // !!!WARNING!!! the ligthSensor uses P4.6 J1.8 GPIO,
+    // So we need to be careful with this port configuration
+
+    // Set P4.3 for Analog input, disabling the I/O circuit.
+        P4->SEL0 = BIT3;
+        P4->SEL1 = BIT3;
+        P4->DIR &= ~BIT3;
+
+        ADC14->CTL0 = ADC14_CTL0_PDIV_0 | ADC14_CTL0_SHS_0 | ADC14_CTL0_DIV_7 | // Why MCLK & DIV7?
+                      ADC14_CTL0_SSEL__MCLK | ADC14_CTL0_SHT0_1 | ADC14_CTL0_ON
+                      | ADC14_CTL0_SHP;
+        ADC14->MCTL[0] = ADC14_MCTLN_INCH_10 | ADC14_MCTLN_VRSEL_0; // Why INCH_10?  | VCC & VSS
+        ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_ENC; //ADC14 Conversion Enable
+        ADC14->IER0 = ADC14_IER0_IE0;   // Enables ADC14's interrupt
+        NVIC_SetPriority(ADC14_IRQn,1); // Interrupt Priority
+        NVIC_EnableIRQ(ADC14_IRQn);     // Enable Interrupt Queue
 
     while(true){
 
@@ -116,8 +140,7 @@ extern "C"
         __disable_irq();
         TIMER32_1->INTCLR = 0U; // clear interrupt flag
         // Why are we using OU here?
-        //P1->OUT ^= BIT0;
-        //OnOffLed();
+
         if (contador == 0) {
             P5-> OUT = BIT6;
             contador = 1;
@@ -154,7 +177,7 @@ extern "C"
             return;
         }
 
-    /*
+
     void ADC14_IRQHandler(void)
     {
         __disable_irq();
@@ -163,5 +186,5 @@ extern "C"
         __enable_irq();
         return;
     }
-    */
+
 }
