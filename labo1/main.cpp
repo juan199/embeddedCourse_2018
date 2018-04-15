@@ -27,14 +27,14 @@
        OnOffLed();
     }
 
-uint16_t ADC14Result = 0U;
+uint16_t ADC14Result = 0U; // change variable's name
 uint16_t contador = 0; // change variable's name
 
 int main(void)
 {
 
     WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;     // Stop watchdog timer
-    P1-> IE = 0;
+    P1-> IE = 0; // try button p1.1 without this. If works, erase it
 
     //  Leds: P5.6 Blue, P2.4 Green, P2.6 Red
     P5-> OUT = ~BIT6;
@@ -60,17 +60,33 @@ int main(void)
     P4-> SEL1 = 1;
 
     // To enable write access on map registers
-    //PMAP-> KEYID = 0x02D52;
+    //PMAP-> KEYID = 0x02D52; // How do we receive data from the light sensor?
 
+    // *********** TIMER A ***********
+    // We are using ACLK (REFOCLK)
+    /*
+    CS->CTL1 = CS_CTL1_SELA__REFOCLK | CS_CTL1_DIVA_7; // ACLK use REFO | divided by 128
+    CS->CLKEN = CS_CLKEN_REFO_EN | CS_CLKEN_ACLK_EN; // enable REFO (32 kHz) | ACLK en
+
+    TIMER_A0->CTL = TIMER_A_CTL_TASSEL_1 | TIMER_A_CTL_IE | TIMER_A_CTL_MC_2 ; // ACLK | enable interrupt | up to FFFF |
+    //TIMER_A0->CCR = 0x00500;
+    NVIC_SetPriority(TA0_N_IRQn,1);
+    NVIC_EnableIRQ(TA0_N_IRQn);
+    */
+
+    // What is the difference between TA0_N and TA0_0 (irq's name)? The interrupt we coded is just working
+    // with the TA0_N
+    // We are not getting the frequency we want even if are configuring everything the right way. Why?
+    // Test it!
 
     // *********** TIMER 32 ***********
     // To use the timer 32
-    /*
-    TIMER32_1->LOAD = 0x0002dce1; //~1 s --> a 3 MHz en el clk, 187.5 kHz para cada cuenta
+
+    TIMER32_1->LOAD = 0x0002dce1; //~1 s --> 3 MHz on clk, 187.5 kHz each count
     TIMER32_1->CONTROL = TIMER32_CONTROL_SIZE | TIMER32_CONTROL_PRESCALE_1 | TIMER32_CONTROL_MODE | TIMER32_CONTROL_IE | TIMER32_CONTROL_ENABLE;
     NVIC_SetPriority(T32_INT1_IRQn,1);
     NVIC_EnableIRQ(T32_INT1_IRQn);
-    */
+    // working the right way!!!!
 
     // *********** BUTTON ***********
     // The button is in the p3.5 pin
@@ -88,7 +104,6 @@ int main(void)
     NVIC_SetPriority(PORT3_IRQn,1);
     NVIC_EnableIRQ(PORT3_IRQn);
 
-
     // Button in the black board: p1.1 pin
     P1-> DIR = 0x00;
     P1-> OUT = 0xff; // pull down or pull up? Check this!
@@ -105,26 +120,27 @@ int main(void)
     NVIC_EnableIRQ(PORT1_IRQn);
     */
 
-
-
     // ******* Microphone *******
     // It uses the pin J1.6 -> P4.3 to send data trough an analog In
     // !!!WARNING!!! the ligthSensor uses P4.6 J1.8 GPIO,
     // So we need to be careful with this port configuration
 
     // Set P4.3 for Analog input, disabling the I/O circuit.
+
         P4->SEL0 = BIT3;
         P4->SEL1 = BIT3;
         P4->DIR &= ~BIT3;
 
-        ADC14->CTL0 = ADC14_CTL0_PDIV_0 | ADC14_CTL0_SHS_0 | ADC14_CTL0_DIV_7 | // Why MCLK & DIV7?
+        ADC14->CTL0 = ADC14_CTL0_PDIV_0 | ADC14_CTL0_SHS_0 | ADC14_CTL0_DIV_7 |
                       ADC14_CTL0_SSEL__MCLK | ADC14_CTL0_SHT0_1 | ADC14_CTL0_ON
-                      | ADC14_CTL0_SHP;
+                      | ADC14_CTL0_SHP; // not diving the ADC's clk | using ADC pin to sample and hold | why?
+                                        // | why? | time to sample | turn the converter on | why?
         ADC14->MCTL[0] = ADC14_MCTLN_INCH_10 | ADC14_MCTLN_VRSEL_0; // Why INCH_10?  | VCC & VSS
         ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_ENC; //ADC14 Conversion Enable
         ADC14->IER0 = ADC14_IER0_IE0;   // Enables ADC14's interrupt
         NVIC_SetPriority(ADC14_IRQn,1); // Interrupt Priority
         NVIC_EnableIRQ(ADC14_IRQn);     // Enable Interrupt Queue
+
 
     while(true){
 
@@ -140,6 +156,23 @@ extern "C"
         __disable_irq();
         TIMER32_1->INTCLR = 0U; // clear interrupt flag
         // Why are we using OU here?
+
+        if (contador == 0) {
+            P5-> OUT = BIT6;
+            contador = 1;
+        } else {
+            P5-> OUT = ~BIT6;
+            contador = 0;
+        }
+        ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC; // Start
+        __enable_irq();
+        return;
+    }
+
+    void TA0_N_IRQHandler(void)
+    {
+        __disable_irq();
+        TIMER_A0->CTL |= TIMER_A_CTL_IFG_OFS; // clear interrupt flag
 
         if (contador == 0) {
             P5-> OUT = BIT6;
