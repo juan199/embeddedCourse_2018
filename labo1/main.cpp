@@ -6,6 +6,7 @@
         int l_iCOUNTER = 0;         // Check variable's name. Is it OK?
         while (l_iCOUNTER < 50000)  // Where can we find the cycles number per instruction?
             // We want this function to have a duration of 1 s (at 3 MHz)
+            // Can we have the start up simulated with delays?
         {
             l_iCOUNTER++;
         }
@@ -69,7 +70,7 @@ int main(void)
     CS->CLKEN = CS_CLKEN_REFO_EN | CS_CLKEN_ACLK_EN; // enable REFO (32 kHz) | ACLK en
 
     TIMER_A0->CTL = TIMER_A_CTL_TASSEL_1 | TIMER_A_CTL_IE | TIMER_A_CTL_MC_2 ; // ACLK | enable interrupt | up to FFFF |
-    //TIMER_A0->CCR = 0x00500;
+    //TIMER_A0->CCR = 0x00500; ???
     NVIC_SetPriority(TA0_N_IRQn,1);
     NVIC_EnableIRQ(TA0_N_IRQn);
     */
@@ -81,12 +82,29 @@ int main(void)
 
     // *********** TIMER 32 ***********
     // To use the timer 32
-
+    /*
     TIMER32_1->LOAD = 0x0002dce1; //~1 s --> 3 MHz on clk, 187.5 kHz each count
     TIMER32_1->CONTROL = TIMER32_CONTROL_SIZE | TIMER32_CONTROL_PRESCALE_1 | TIMER32_CONTROL_MODE | TIMER32_CONTROL_IE | TIMER32_CONTROL_ENABLE;
     NVIC_SetPriority(T32_INT1_IRQn,1);
     NVIC_EnableIRQ(T32_INT1_IRQn);
     // working the right way!!!!
+    */
+
+    // *********** BUTTON ***********
+    // The button is in the p4.1 pin
+
+    P4-> DIR = ~BIT1;
+    P4-> REN = BIT1;
+    P4-> OUT = BIT1;
+    P4-> DS = ~BIT1;
+    P4-> SEL0 = ~BIT1;
+    P4-> SEL1 = ~BIT1;
+    P4-> IES = ~BIT1;
+    P4-> IFG = ~BIT1;
+    P4-> IE = BIT1;
+
+    NVIC_SetPriority(PORT4_IRQn,1);
+    NVIC_EnableIRQ(PORT4_IRQn);
 
     // *********** BUTTON ***********
     // The button is in the p3.5 pin
@@ -126,7 +144,7 @@ int main(void)
     // So we need to be careful with this port configuration
 
     // Set P4.3 for Analog input, disabling the I/O circuit.
-
+    /*
         P4->SEL0 = BIT3;
         P4->SEL1 = BIT3;
         P4->DIR &= ~BIT3;
@@ -140,7 +158,7 @@ int main(void)
         ADC14->IER0 = ADC14_IER0_IE0;   // Enables ADC14's interrupt
         NVIC_SetPriority(ADC14_IRQn,1); // Interrupt Priority
         NVIC_EnableIRQ(ADC14_IRQn);     // Enable Interrupt Queue
-
+    */
 
     while(true){
 
@@ -172,7 +190,7 @@ extern "C"
     void TA0_N_IRQHandler(void)
     {
         __disable_irq();
-        TIMER_A0->CTL |= TIMER_A_CTL_IFG_OFS; // clear interrupt flag
+        TIMER_A0->CTL &= 0xfffe; // clear interrupt flag
 
         if (contador == 0) {
             P5-> OUT = BIT6;
@@ -210,6 +228,17 @@ extern "C"
             return;
         }
 
+    void PORT4_IRQHandler (void)
+    {
+        __disable_irq();
+        P4-> IFG = 0; // clear interrupt flag
+        //P1->OUT ^= BIT0;
+        OnOffLed();
+        //P5-> OUT = BIT6;
+        //ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC; // Start
+        __enable_irq();
+        return;
+    }
 
     void ADC14_IRQHandler(void)
     {

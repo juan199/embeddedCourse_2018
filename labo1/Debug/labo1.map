@@ -1,7 +1,7 @@
 ******************************************************************************
                   TI ARM Linker Unix v16.9.6                   
 ******************************************************************************
->> Linked Sun Apr 15 15:33:03 2018
+>> Linked Wed Apr 18 20:36:43 2018
 
 OUTPUT FILE NAME:   <labo1.out>
 ENTRY POINT SYMBOL: "_c_int00"  address: 00000801
@@ -158,12 +158,13 @@ address   name
 0000093b  MemManage_Handler              
 0000093b  NMI_Handler                    
 0000093b  PCM_IRQHandler                 
-000005e5  PORT1_IRQHandler               
-000005e5  PORT1_IRQHandler               
+000005d3  PORT1_IRQHandler               
+000005d3  PORT1_IRQHandler               
 0000093b  PORT2_IRQHandler               
-000005f7  PORT3_IRQHandler               
-000005f7  PORT3_IRQHandler               
-0000093b  PORT4_IRQHandler               
+000005e5  PORT3_IRQHandler               
+000005e5  PORT3_IRQHandler               
+000005f7  PORT4_IRQHandler               
+000005f7  PORT4_IRQHandler               
 0000093b  PORT5_IRQHandler               
 0000093b  PORT6_IRQHandler               
 0000093b  PSS_IRQHandler                 
@@ -177,13 +178,13 @@ UNDEFED   SHT$$INIT_ARRAY$$Limit
 2000001c  SystemCoreClock                
 000000e5  SystemCoreClockUpdate          
 0000035d  SystemInit                     
-0000057f  T32_INT1_IRQHandler            
-0000057f  T32_INT1_IRQHandler            
+00000567  T32_INT1_IRQHandler            
+00000567  T32_INT1_IRQHandler            
 0000093b  T32_INT2_IRQHandler            
 0000093b  T32_INTC_IRQHandler            
 0000093b  TA0_0_IRQHandler               
-000005b7  TA0_N_IRQHandler               
-000005b7  TA0_N_IRQHandler               
+0000059f  TA0_N_IRQHandler               
+0000059f  TA0_N_IRQHandler               
 0000093b  TA1_0_IRQHandler               
 0000093b  TA1_N_IRQHandler               
 0000093b  TA2_0_IRQHandler               
@@ -252,14 +253,16 @@ address   name
 000004a9  _Z8OnOffLedv                   
 000004cd  _Z10BlinkSetUpv                
 000004dd  main                           
-0000057f  T32_INT1_IRQHandler            
-0000057f  T32_INT1_IRQHandler            
-000005b7  TA0_N_IRQHandler               
-000005b7  TA0_N_IRQHandler               
-000005e5  PORT1_IRQHandler               
-000005e5  PORT1_IRQHandler               
-000005f7  PORT3_IRQHandler               
-000005f7  PORT3_IRQHandler               
+00000567  T32_INT1_IRQHandler            
+00000567  T32_INT1_IRQHandler            
+0000059f  TA0_N_IRQHandler               
+0000059f  TA0_N_IRQHandler               
+000005d3  PORT1_IRQHandler               
+000005d3  PORT1_IRQHandler               
+000005e5  PORT3_IRQHandler               
+000005e5  PORT3_IRQHandler               
+000005f7  PORT4_IRQHandler               
+000005f7  PORT4_IRQHandler               
 00000609  ADC14_IRQHandler               
 00000609  ADC14_IRQHandler               
 0000068d  __aeabi_memcpy                 
@@ -306,7 +309,6 @@ address   name
 0000093b  NMI_Handler                    
 0000093b  PCM_IRQHandler                 
 0000093b  PORT2_IRQHandler               
-0000093b  PORT4_IRQHandler               
 0000093b  PORT5_IRQHandler               
 0000093b  PORT6_IRQHandler               
 0000093b  PSS_IRQHandler                 
@@ -353,4 +355,4 @@ ffffffff  binit
 UNDEFED   SHT$$INIT_ARRAY$$Base          
 UNDEFED   SHT$$INIT_ARRAY$$Limit         
 
-[109 symbols]
+[110 symbols]
