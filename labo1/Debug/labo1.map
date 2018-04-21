@@ -1,7 +1,7 @@
 ******************************************************************************
                   TI ARM Linker Unix v16.9.6                   
 ******************************************************************************
->> Linked Wed Apr 18 20:36:43 2018
+>> Linked Thu Apr 19 20:33:30 2018
 
 OUTPUT FILE NAME:   <labo1.out>
 ENTRY POINT SYMBOL: "_c_int00"  address: 00000801
@@ -88,7 +88,7 @@ MODULE SUMMARY
     +--+-----------------------------+------+---------+---------+
        Total:                        1462   228       16     
                                                              
-    /home/sama/tools/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/lib/rtsv7M4_T_le_v4SPD16_eabi.lib
+    /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/lib/rtsv7M4_T_le_v4SPD16_eabi.lib
        memcpy_t2.obj                 156    0         0      
        autoinit.obj                  112    0         0      
        exit.obj                      84     0         24     
