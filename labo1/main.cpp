@@ -12,10 +12,22 @@ bool g_bFlagFirstTime32Timer2 = true;      // Change variable's name
 
 uint16_t ADC14Result = 0U;                 // Change variable's name
 
-bool g_bToggleFlagTimerA = false;          // Change variable's name
+//bool g_bToggleFlagTimerA = false;          // Change variable's name
 bool g_bFlagFirstTimerA = true;            // Change variable's name
 bool g_bNightLevel = false;
 uint16_t g_iTimerA = 0;
+bool g_bAdcFirstFiveSeconds = true;
+bool g_bAdcSixthSecond = false;
+bool g_bAdcAverageFirstFiveSeconds = true;
+bool g_bAdcCompareNUpdate = false;
+bool g_bAdcOnLight = false;
+int g_iAdcCounter = 0;
+uint32_t u32_second1Data = 0;
+uint32_t u32_second2Data = 0;
+uint32_t u32_second3Data = 0;
+uint32_t u32_second4Data = 0;
+uint32_t u32_second5Data = 0;
+uint32_t u32_second6Data = 0;
 
 void DelayMs () {                // Approximately 1 s
      int l_iCOUNTER = 0;         // Check variable's name. Is it OK?
@@ -33,13 +45,14 @@ void OnOffLed(){
     DelayMs();
     P5-> OUT = ~BIT6;
     P2-> OUT = ~(BIT4 | BIT6);
-    DelayMs();
 }
 
 void BlinkSetUp ()
  {
     OnOffLed();
+    DelayMs();
     OnOffLed();
+    DelayMs();
     OnOffLed();
  }
 
@@ -58,7 +71,7 @@ extern "C"
             P5-> OUT = ~BIT6;
             g_bFlagFirstTime32Timer1 = true;
         }*/
-        ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC; // Start AD conversion
+        //ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC; // Start AD conversion
         __enable_irq();
         return;
     }
@@ -88,6 +101,7 @@ extern "C"
             //P2-> OUT ^= BIT4 | BIT6;
             g_fLux = OPT3001_getLux();
         }
+        ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC; // Start AD conversion
         __enable_irq();
         return;
     }
@@ -138,11 +152,89 @@ extern "C"
         return;
     }
 
+
     void ADC14_IRQHandler(void)
     {
         __disable_irq();
         ADC14Result = ADC14->MEM[0];
         ADC14->CLRIFGR0 = ADC14_CLRIFGR0_CLRIFG0;
+
+
+        if(g_bAdcFirstFiveSeconds)
+        {
+            if(0 <= g_iAdcCounter < 100 )
+            {
+                u32_second1Data += ADC14Result;
+            }
+            if(100 <= g_iAdcCounter < 200 )
+            {
+                u32_second2Data += ADC14Result;
+            }
+            if(200 <= g_iAdcCounter < 300 )
+            {
+                u32_second3Data += ADC14Result;
+            }
+            if(300 <= g_iAdcCounter < 400 )
+            {
+                u32_second4Data += ADC14Result;
+            }
+            if(400 <= g_iAdcCounter < 500 )
+            {
+                u32_second5Data += ADC14Result;
+            }
+            g_iAdcCounter++;
+            if(g_iAdcCounter == 500)
+            {
+                g_bAdcFirstFiveSeconds = false;
+                g_bAdcSixthSecond = true;
+                g_iAdcCounter = 0;
+            }
+        }
+
+        if(g_bAdcSixthSecond == true)
+        {
+            u32_second6Data += ADC14Result;
+            g_iAdcCounter++;
+            if(g_iAdcCounter == 100)
+            {
+                g_bAdcSixthSecond = false;
+                g_bAdcCompareNUpdate = true;
+                g_iAdcCounter = 0;
+            }
+        }
+
+        if(g_bAdcCompareNUpdate == true)
+        {
+            if(g_bAdcAverageFirstFiveSeconds == true)
+            {
+                u32_second1Data = u32_second1Data/100;
+                u32_second2Data = u32_second2Data/100;
+                u32_second3Data = u32_second3Data/100;
+                u32_second4Data = u32_second4Data/100;
+                u32_second5Data = u32_second5Data/100;
+                g_bAdcAverageFirstFiveSeconds = false;
+            }
+            u32_second6Data = u32_second6Data/100;
+
+            if(u32_second6Data > u32_second1Data ||
+               u32_second6Data > u32_second2Data ||
+               u32_second6Data > u32_second3Data ||
+               u32_second6Data > u32_second4Data ||
+               u32_second6Data > u32_second5Data)
+            {
+                g_bAdcOnLight = true;
+            }else{ g_bAdcOnLight = false; } // Move these "clean flag" into the timer logic
+
+            u32_second1Data = u32_second2Data;
+            u32_second2Data = u32_second3Data;
+            u32_second3Data = u32_second4Data;
+            u32_second4Data = u32_second5Data;
+            u32_second5Data = u32_second6Data;
+            u32_second6Data = 0;
+            g_bAdcCompareNUpdate = false;
+            g_bAdcSixthSecond = true;
+        }
+
         __enable_irq();
         return;
     }
