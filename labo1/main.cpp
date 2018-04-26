@@ -6,6 +6,16 @@ extern "C" {
 #include "HAL_OPT3001.h"
 }
 
+// 5 W Green light
+#define PX P2
+#define BITX BIT4
+// 10 W Blue light
+//#define PX P5
+//#define BITX BIT6
+// 15 W Red light
+//#define PX P2
+//#define BITX BIT6
+
 float g_fLux;
 bool g_bFlagFirstTime32Timer1 = true;      // Change variable's name
 bool g_bFlagFirstTime32Timer2 = true;      // Change variable's name
@@ -40,11 +50,9 @@ void DelayMs () {                // Approximately 1 s
  }
 
 void OnOffLed(){
-    P5-> OUT = BIT6;
-    P2-> OUT = BIT4 | BIT6;
+    PX-> OUT = BITX;
     DelayMs();
-    P5-> OUT = ~BIT6;
-    P2-> OUT = ~(BIT4 | BIT6);
+    PX-> OUT &= ~BITX;
 }
 
 void BlinkSetUp ()
@@ -129,11 +137,11 @@ extern "C"
 
         if (g_bNightLevel == true){
             if (g_iTimerA < 3){
-                P5-> OUT = BIT6;
+                PX-> OUT = BITX;
                 g_iTimerA++;
             }
         else {
-                P5-> OUT = ~BIT6;
+                PX-> OUT &= ~BITX;
             }
         }
         __enable_irq();
@@ -183,7 +191,7 @@ extern "C"
                 u32_second5Data += ADC14Result;
             }
             g_iAdcCounter++;
-            if(g_iAdcCounter == 500)
+            if(g_iAdcCounter == 500) // == 501?
             {
                 g_bAdcFirstFiveSeconds = false;
                 g_bAdcSixthSecond = true;
@@ -216,7 +224,7 @@ extern "C"
             }
             u32_second6Data = u32_second6Data/100;
 
-            if(u32_second6Data > u32_second1Data ||
+            if(u32_second6Data > u32_second1Data || // 10% ?
                u32_second6Data > u32_second2Data ||
                u32_second6Data > u32_second3Data ||
                u32_second6Data > u32_second4Data ||
@@ -248,12 +256,10 @@ int main(void)
 {
     WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;     // Stop watchdog timer
 
-    //  Leds: P5.6 Blue, P2.4 Green, P2.6 Red
-    P5-> OUT = ~BIT6;
-    P2-> OUT = ~(BIT4 | BIT6); // P2OUT register starts dirty when we run the program. Do we need to keep
-        // cleaning those kind of registers at the beginning of the code every time?
-    P5-> DIR = BIT6;
-    P2-> DIR = BIT4 | BIT6;
+    PX-> OUT &= ~BITX;
+    // P2OUT register starts dirty when we run the program. Do we need to keep
+    // cleaning those kind of registers at the beginning of the code every time?
+    PX-> DIR = BITX;
 
     BlinkSetUp();
 
