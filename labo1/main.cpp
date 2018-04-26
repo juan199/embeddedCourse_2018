@@ -1,69 +1,72 @@
-extern "C" {
-#include <ti/devices/msp432p4xx/inc/msp.h>
-#include <ti/devices/msp432p4xx/driverlib/driverlib.h>
-#include <ti/grlib/grlib.h>
-#include "HAL_I2C.h"
-#include "HAL_OPT3001.h"
+// Lab 1
+
+// including all files we need
+extern "C"
+{
+    #include <ti/devices/msp432p4xx/inc/msp.h>
+    #include <ti/devices/msp432p4xx/driverlib/driverlib.h>
+    #include <ti/grlib/grlib.h>
+    #include "HAL_I2C.h"
+    #include "HAL_OPT3001.h"
 }
 
 // 5 W Green light
 //#define PX P2
 //#define BITX BIT4
 // 10 W Blue light
-#define PX P5
-#define BITX BIT6
-// 15 W Red light
-//#define PX P2
+//#define PX P5
 //#define BITX BIT6
+// 15 W Red light
+#define PX P2
+#define BITX BIT6
 
 float g_fLux;
-bool g_bFlagFirstTime32Timer1 = true;      // Change variable's name
-bool g_bFlagFirstTime32Timer2 = true;      // Change variable's name
 
-uint16_t ADC14Result = 0U;                 // Change variable's name
+bool g_bFlagFirstTime32Timer2 = true;
 
-//bool g_bToggleFlagTimerA = false;          // Change variable's name
-bool g_bFlagFirstTimerA = true;            // Change variable's name
+uint16_t g_ui16AdcResult = 0U;
+
+
+bool g_bFirstLightMeasure = true;
 bool g_bNightLevel = false;
-uint16_t g_iTimerA = 0;
+uint16_t g_iCounterT321 = 0;
 bool g_bAdcFirstFiveSeconds = true;
 bool g_bAdcSixthSecond = false;
 bool g_bAdcAverageFirstFiveSeconds = true;
 bool g_bAdcCompareNUpdate = false;
 bool g_bAdcOnLight = false;
 int g_iAdcCounter = 0;
-uint32_t u32_second1Data = 0;
-uint32_t u32_second2Data = 0;
-uint32_t u32_second3Data = 0;
-uint32_t u32_second4Data = 0;
-uint32_t u32_second5Data = 0;
-uint32_t u32_second6Data = 0;
+uint32_t g_u32_second1Data = 0;
+uint32_t g_u32_second2Data = 0;
+uint32_t g_u32_second3Data = 0;
+uint32_t g_u32_second4Data = 0;
+uint32_t g_u32_second5Data = 0;
+uint32_t g_u32_second6Data = 0;
 
-void DelayMs () {                // Approximately 1 s
-     int l_iCOUNTER = 0;         // Check variable's name. Is it OK?
-     while (l_iCOUNTER < 50000)  // Where can we find the cycles number per instruction?
-         // We want this function to have a duration of 1 s (at 3 MHz)
-         // Can we have the start up simulated with delays?
-     {
-         l_iCOUNTER++;
-     }
+void DelayMs()
+{
+    int l_iCOUNTER = 0;
+    while (l_iCOUNTER < 50000)  // Where can we find the cycles number per instruction? We want this function to have a duration of 1 s (at 3 MHz)
+    {
+        l_iCOUNTER++;
+    }
  }
 
-void OnOffLed(){
+void OnOffLed()
+{
     PX-> OUT = BITX;
     DelayMs();
     PX-> OUT &= ~BITX;
 }
 
 void BlinkSetUp ()
- {
+{
     OnOffLed();
     DelayMs();
     OnOffLed();
     DelayMs();
     OnOffLed();
- }
-
+}
 
 extern "C"
 {
@@ -73,19 +76,16 @@ extern "C"
         TIMER32_1->INTCLR = 0U; // clear interrupt flag
 
         if (g_bNightLevel == true){
-            if (g_iTimerA < 600){
+            if (g_iCounterT321 < 1000){
                 PX-> OUT = BITX;
-                g_iTimerA++;
-            }
-        else {
+                g_iCounterT321++;
+            } else {
                 PX-> OUT &= ~BITX;
                 g_bAdcOnLight = false;
                 g_bNightLevel = false;
-                g_iTimerA = 0;
+                g_iCounterT321 = 0;
             }
         }
-
-        //ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC; // Start AD conversion
         __enable_irq();
         return;
     }
@@ -98,8 +98,6 @@ extern "C"
         if (g_bFlagFirstTime32Timer2 == true)
         {
             g_bFlagFirstTime32Timer2 = false;
-            //P5-> OUT = BIT6;
-            //P2-> OUT = ~(BIT4 | BIT6);
 
             /* Initialize I2C communication */
             Init_I2C_GPIO();
@@ -109,71 +107,28 @@ extern "C"
             OPT3001_init();
             __delay_cycles(100000);
 
-            TIMER32_2->BGLOAD = 0x000015F9; // 30 ms
+            TIMER32_2->BGLOAD = 0x00000753; // 10 ms
         } else {
-            //P5-> OUT = ~BIT6;
-            //P2-> OUT ^= BIT4 | BIT6;
+
             g_fLux = OPT3001_getLux();
             ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC; // Start AD conversion
 
-            if (g_bFlagFirstTimerA == true){
+            if (g_bFirstLightMeasure == true){
                 if(g_fLux < 30 ){
                     g_bNightLevel = true;
                 } else{
                     g_bNightLevel = false;
                 }
-                g_bFlagFirstTimerA = false;
+                g_bFirstLightMeasure = false;
             } else {
                 if((g_fLux < 30) && (g_bAdcOnLight == true)){
                     g_bNightLevel = true;
-                } else {
-                    g_bNightLevel = false;
                 }
-            }
-
-
-            /*
-            if (g_bNightLevel == true){
-                if (g_iTimerA < 3){
-                    PX-> OUT = BITX;
-                    g_iTimerA++;
-                }
-            else {
-                    PX-> OUT &= ~BITX;
-                }
-            }*/
-        }
-        __enable_irq();
-        return;
-    }
-    /*
-    void TA0_N_IRQHandler(void)
-    {
-        __disable_irq();
-        TIMER_A0->CTL &= 0xfffe; // clear interrupt flag
-        if (g_bFlagFirstTimerA == true){
-            if(g_fLux < 30 ){
-                g_bNightLevel = true;
-            } else{
-                g_bNightLevel = false;
-            }
-            g_bFlagFirstTimerA = false;
-        }
-
-        if (g_bNightLevel == true){
-            if (g_iTimerA < 3){
-                PX-> OUT = BITX;
-                g_iTimerA++;
-            }
-        else {
-                PX-> OUT &= ~BITX;
             }
         }
         __enable_irq();
         return;
     }
-    */
-
 
     void PORT4_IRQHandler (void)
     {
@@ -181,7 +136,7 @@ extern "C"
         P4-> IFG = 0; // clear interrupt flag
         //OnOffLed();
         g_bNightLevel = true;
-        g_iTimerA = 0;
+        g_iCounterT321 = 0;
         __enable_irq();
         return;
     }
@@ -190,7 +145,7 @@ extern "C"
     void ADC14_IRQHandler(void)
     {
         __disable_irq();
-        ADC14Result = ADC14->MEM[0];
+        g_ui16AdcResult = ADC14->MEM[0];
         ADC14->CLRIFGR0 = ADC14_CLRIFGR0_CLRIFG0;
 
 
@@ -198,23 +153,23 @@ extern "C"
         {
             if((0 <= g_iAdcCounter) && (g_iAdcCounter< 100)) // pending: use a case
             {
-                u32_second1Data += ADC14Result;
+                g_u32_second1Data += g_ui16AdcResult;
             }
             if((100 <= g_iAdcCounter) && (g_iAdcCounter< 200))
             {
-                u32_second2Data += ADC14Result;
+                g_u32_second2Data += g_ui16AdcResult;
             }
             if((200 <= g_iAdcCounter) && (g_iAdcCounter< 300))
             {
-                u32_second3Data += ADC14Result;
+                g_u32_second3Data += g_ui16AdcResult;
             }
             if((300 <= g_iAdcCounter) && (g_iAdcCounter< 400))
             {
-                u32_second4Data += ADC14Result;
+                g_u32_second4Data += g_ui16AdcResult;
             }
             if((400 <= g_iAdcCounter) && (g_iAdcCounter< 500))
             {
-                u32_second5Data += ADC14Result;
+                g_u32_second5Data += g_ui16AdcResult;
             }
             g_iAdcCounter++;
             if(g_iAdcCounter == 501)
@@ -227,7 +182,7 @@ extern "C"
 
         if(g_bAdcSixthSecond == true)
         {
-            u32_second6Data += ADC14Result;
+            g_u32_second6Data += g_ui16AdcResult;
             g_iAdcCounter++;
             if(g_iAdcCounter == 100)
             {
@@ -242,32 +197,32 @@ extern "C"
         {
             if(g_bAdcAverageFirstFiveSeconds == true)
             {
-                u32_second1Data = u32_second1Data/100;
-                u32_second2Data = u32_second2Data/100;
-                u32_second3Data = u32_second3Data/100;
-                u32_second4Data = u32_second4Data/100;
-                u32_second5Data = u32_second5Data/100;
+                g_u32_second1Data = g_u32_second1Data/100;
+                g_u32_second2Data = g_u32_second2Data/100;
+                g_u32_second3Data = g_u32_second3Data/100;
+                g_u32_second4Data = g_u32_second4Data/100;
+                g_u32_second5Data = g_u32_second5Data/100;
                 g_bAdcAverageFirstFiveSeconds = false;
             }
-            u32_second6Data = u32_second6Data/100;
+            g_u32_second6Data = g_u32_second6Data/100;
 
-            if(u32_second6Data > (u32_second1Data + (u32_second1Data*0.1)) || // 10% ?
-               u32_second6Data > (u32_second2Data + (u32_second2Data*0.1)) ||
-               u32_second6Data > (u32_second3Data + (u32_second3Data*0.1)) ||
-               u32_second6Data > (u32_second4Data + (u32_second4Data*0.1)) ||
-               u32_second6Data > (u32_second5Data + (u32_second5Data*0.1)))
+            if(g_u32_second6Data > (g_u32_second1Data + (g_u32_second1Data*0.05)) || // 10% ?
+               g_u32_second6Data > (g_u32_second2Data + (g_u32_second2Data*0.05)) ||
+               g_u32_second6Data > (g_u32_second3Data + (g_u32_second3Data*0.05)) ||
+               g_u32_second6Data > (g_u32_second4Data + (g_u32_second4Data*0.05)) ||
+               g_u32_second6Data > (g_u32_second5Data + (g_u32_second5Data*0.05)))
             {
                 g_bAdcOnLight = true;
                 //OnOffLed();
                 //PX-> OUT = BITX;
             }//else{ /*PX-> OUT &= ~BITX; }*/ g_bAdcOnLight = false; } // Move these "clean flag" into the timer logic
 
-            u32_second1Data = u32_second2Data;
-            u32_second2Data = u32_second3Data;
-            u32_second3Data = u32_second4Data;
-            u32_second4Data = u32_second5Data;
-            u32_second5Data = u32_second6Data;
-            u32_second6Data = 0;
+            g_u32_second1Data = g_u32_second2Data;
+            g_u32_second2Data = g_u32_second3Data;
+            g_u32_second3Data = g_u32_second4Data;
+            g_u32_second4Data = g_u32_second5Data;
+            g_u32_second5Data = g_u32_second6Data;
+            g_u32_second6Data = 0;
             g_bAdcCompareNUpdate = false;
             g_bAdcSixthSecond = true;
         }
@@ -291,22 +246,6 @@ int main(void)
     PX-> DIR = BITX;
 
     BlinkSetUp();
-
-    // *********** TIMER A ***********
-    // We are using ACLK (REFOCLK)
-    //By default TimerA uses __LFXT: 32768 Hz clk source
-    /*
-    TIMER_A0->CTL = TIMER_A_CTL_TASSEL_1 | TIMER_A_CTL_IE | TIMER_A_CTL_MC_2 ; // ACLK | enable interrupt | up to FFFF |
-
-    NVIC_SetPriority(TA0_N_IRQn,1);
-    NVIC_EnableIRQ(TA0_N_IRQn);
-    */
-
-
-    // What is the difference between TA0_N and TA0_0 (irq's name)? The interrupt we coded is just working
-    // with the TA0_N
-    // We are not getting the frequency we want even if are configuring everything the right way. Why?
-    // Test it!
 
     // *********** TIMER 32_1: ADC Enable ***********
     // To use the timer 32
