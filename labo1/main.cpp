@@ -7,11 +7,11 @@ extern "C" {
 }
 
 // 5 W Green light
-#define PX P2
-#define BITX BIT4
+//#define PX P2
+//#define BITX BIT4
 // 10 W Blue light
-//#define PX P5
-//#define BITX BIT6
+#define PX P5
+#define BITX BIT6
 // 15 W Red light
 //#define PX P2
 //#define BITX BIT6
@@ -71,14 +71,20 @@ extern "C"
     {
         __disable_irq();
         TIMER32_1->INTCLR = 0U; // clear interrupt flag
-        /*
-        if (g_bFlagFirstTime32Timer1 == true) {
-            P5-> OUT = BIT6;
-            g_bFlagFirstTime32Timer1 = false;
-        } else {
-            P5-> OUT = ~BIT6;
-            g_bFlagFirstTime32Timer1 = true;
-        }*/
+
+        if (g_bNightLevel == true){
+            if (g_iTimerA < 600){
+                PX-> OUT = BITX;
+                g_iTimerA++;
+            }
+        else {
+                PX-> OUT &= ~BITX;
+                g_bAdcOnLight = false;
+                g_bNightLevel = false;
+                g_iTimerA = 0;
+            }
+        }
+
         //ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC; // Start AD conversion
         __enable_irq();
         return;
@@ -103,29 +109,48 @@ extern "C"
             OPT3001_init();
             __delay_cycles(100000);
 
-            TIMER32_2->BGLOAD = 0x0002dce1;
+            TIMER32_2->BGLOAD = 0x000015F9; // 30 ms
         } else {
             //P5-> OUT = ~BIT6;
             //P2-> OUT ^= BIT4 | BIT6;
             g_fLux = OPT3001_getLux();
+            ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC; // Start AD conversion
+
+            if (g_bFlagFirstTimerA == true){
+                if(g_fLux < 30 ){
+                    g_bNightLevel = true;
+                } else{
+                    g_bNightLevel = false;
+                }
+                g_bFlagFirstTimerA = false;
+            } else {
+                if((g_fLux < 30) && (g_bAdcOnLight == true)){
+                    g_bNightLevel = true;
+                } else {
+                    g_bNightLevel = false;
+                }
+            }
+
+
+            /*
+            if (g_bNightLevel == true){
+                if (g_iTimerA < 3){
+                    PX-> OUT = BITX;
+                    g_iTimerA++;
+                }
+            else {
+                    PX-> OUT &= ~BITX;
+                }
+            }*/
         }
-        ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC; // Start AD conversion
         __enable_irq();
         return;
     }
-
+    /*
     void TA0_N_IRQHandler(void)
     {
         __disable_irq();
         TIMER_A0->CTL &= 0xfffe; // clear interrupt flag
-                /*
-        if (g_bToggleFlagTimerA == false) {
-            P5-> OUT = BIT6;
-            g_bToggleFlagTimerA = true;
-        } else {
-            P5-> OUT = ~BIT6;
-            g_bToggleFlagTimerA = false;
-        }*/
         if (g_bFlagFirstTimerA == true){
             if(g_fLux < 30 ){
                 g_bNightLevel = true;
@@ -147,6 +172,7 @@ extern "C"
         __enable_irq();
         return;
     }
+    */
 
 
     void PORT4_IRQHandler (void)
@@ -168,30 +194,30 @@ extern "C"
         ADC14->CLRIFGR0 = ADC14_CLRIFGR0_CLRIFG0;
 
 
-        if(g_bAdcFirstFiveSeconds)
+        if(g_bAdcFirstFiveSeconds == true)
         {
-            if(0 <= g_iAdcCounter < 100 )
+            if((0 <= g_iAdcCounter) && (g_iAdcCounter< 100)) // pending: use a case
             {
                 u32_second1Data += ADC14Result;
             }
-            if(100 <= g_iAdcCounter < 200 )
+            if((100 <= g_iAdcCounter) && (g_iAdcCounter< 200))
             {
                 u32_second2Data += ADC14Result;
             }
-            if(200 <= g_iAdcCounter < 300 )
+            if((200 <= g_iAdcCounter) && (g_iAdcCounter< 300))
             {
                 u32_second3Data += ADC14Result;
             }
-            if(300 <= g_iAdcCounter < 400 )
+            if((300 <= g_iAdcCounter) && (g_iAdcCounter< 400))
             {
                 u32_second4Data += ADC14Result;
             }
-            if(400 <= g_iAdcCounter < 500 )
+            if((400 <= g_iAdcCounter) && (g_iAdcCounter< 500))
             {
                 u32_second5Data += ADC14Result;
             }
             g_iAdcCounter++;
-            if(g_iAdcCounter == 500) // == 501?
+            if(g_iAdcCounter == 501)
             {
                 g_bAdcFirstFiveSeconds = false;
                 g_bAdcSixthSecond = true;
@@ -208,6 +234,7 @@ extern "C"
                 g_bAdcSixthSecond = false;
                 g_bAdcCompareNUpdate = true;
                 g_iAdcCounter = 0;
+
             }
         }
 
@@ -224,14 +251,16 @@ extern "C"
             }
             u32_second6Data = u32_second6Data/100;
 
-            if(u32_second6Data > u32_second1Data || // 10% ?
-               u32_second6Data > u32_second2Data ||
-               u32_second6Data > u32_second3Data ||
-               u32_second6Data > u32_second4Data ||
-               u32_second6Data > u32_second5Data)
+            if(u32_second6Data > (u32_second1Data + (u32_second1Data*0.1)) || // 10% ?
+               u32_second6Data > (u32_second2Data + (u32_second2Data*0.1)) ||
+               u32_second6Data > (u32_second3Data + (u32_second3Data*0.1)) ||
+               u32_second6Data > (u32_second4Data + (u32_second4Data*0.1)) ||
+               u32_second6Data > (u32_second5Data + (u32_second5Data*0.1)))
             {
                 g_bAdcOnLight = true;
-            }else{ g_bAdcOnLight = false; } // Move these "clean flag" into the timer logic
+                //OnOffLed();
+                //PX-> OUT = BITX;
+            }//else{ /*PX-> OUT &= ~BITX; }*/ g_bAdcOnLight = false; } // Move these "clean flag" into the timer logic
 
             u32_second1Data = u32_second2Data;
             u32_second2Data = u32_second3Data;
@@ -263,14 +292,15 @@ int main(void)
 
     BlinkSetUp();
 
-
     // *********** TIMER A ***********
     // We are using ACLK (REFOCLK)
     //By default TimerA uses __LFXT: 32768 Hz clk source
+    /*
     TIMER_A0->CTL = TIMER_A_CTL_TASSEL_1 | TIMER_A_CTL_IE | TIMER_A_CTL_MC_2 ; // ACLK | enable interrupt | up to FFFF |
 
     NVIC_SetPriority(TA0_N_IRQn,1);
     NVIC_EnableIRQ(TA0_N_IRQn);
+    */
 
 
     // What is the difference between TA0_N and TA0_0 (irq's name)? The interrupt we coded is just working
@@ -280,7 +310,7 @@ int main(void)
 
     // *********** TIMER 32_1: ADC Enable ***********
     // To use the timer 32
-    TIMER32_1->LOAD = 0x0002dce1; //~1 s --> 3 MHz on clk, 187.5 kHz each count
+    TIMER32_1->LOAD = 0x00000753; //~10 ms --> 3 MHz on clk
     TIMER32_1->CONTROL = TIMER32_CONTROL_SIZE | TIMER32_CONTROL_PRESCALE_1 | TIMER32_CONTROL_MODE | TIMER32_CONTROL_IE | TIMER32_CONTROL_ENABLE;
     NVIC_SetPriority(T32_INT1_IRQn,1);
     NVIC_EnableIRQ(T32_INT1_IRQn);
@@ -288,7 +318,7 @@ int main(void)
 
     // *********** TIMER 32_2: LightSensor read ***********
     // To use the timer 32
-    TIMER32_2->LOAD = 0x000000ff; //~1 s --> 3 MHz on clk, 187.5 kHz each count
+    TIMER32_2->LOAD = 0x000000ff; //immediately
     TIMER32_2->CONTROL = TIMER32_CONTROL_SIZE | TIMER32_CONTROL_PRESCALE_1 | TIMER32_CONTROL_MODE | TIMER32_CONTROL_IE | TIMER32_CONTROL_ENABLE;
     NVIC_SetPriority(T32_INT2_IRQn,1);
     NVIC_EnableIRQ(T32_INT2_IRQn);
