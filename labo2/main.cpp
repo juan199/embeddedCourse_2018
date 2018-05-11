@@ -3,6 +3,7 @@
 #include "Scheduler.hpp"
 #include "Task.hpp"
 #include "LED.hpp"
+#include "ADC_en.hpp"
 
 // ##########################
 // Global/Static declarations
@@ -13,6 +14,17 @@ volatile static uint64_t g_SystemTicks = 0; // - The system counter.
 Mailbox* g_Mailbox = Mailbox::getMailbox();
 Scheduler g_MainScheduler; // - Instantiate a Scheduler
 
+// pasar a la clase del ADC
+//sin signo
+/*
+uint16_t g_ui16AdcXResult = 0U;
+uint16_t g_ui16AdcYResult = 0U;
+uint16_t g_ui16AdcZResult = 0U;
+*/
+// con signo
+int16_t g_i16AdcXResult = 0U;
+int16_t g_i16AdcYResult = 0U;
+int16_t g_i16AdcZResult = 0U;
 // #########################
 //          MAIN
 // #########################
@@ -21,11 +33,26 @@ void main(void)
     // - Instantiate two new Tasks
     LED BlueLED(BIT2);
     LED GreenLED(BIT1);
+    ADC_en UniqueADC(BIT1);
+
+    // ponerle un encabezado: configura los pines del acelerómetro (pasar
+    // al setup del ADC)
+    /*
+    P4->SEL0 = BIT0 | BIT2;
+    P4->SEL1 = BIT0 | BIT2;
+    P4->DIR &= ~(BIT0 | BIT2);
+    P6->SEL0 = BIT1;
+    P6->SEL1 = BIT1;
+    P6->DIR &= ~BIT1;
+    */
+
     // - Run the overall setup function for the system
     Setup();
     // - Attach the Tasks to the Scheduler;
     g_MainScheduler.attach(&BlueLED,TaskType_Periodic, TaskActiveTrue,500);
-    g_MainScheduler.attach(&GreenLED, TaskType_Periodic,TaskActiveFalse,600);
+    g_MainScheduler.attach(&GreenLED, TaskType_Periodic,TaskActiveFalse,600); // cambiar a True con un botón
+    //g_MainScheduler.attach(&UniqueADC,TaskType_Periodic, TaskActiveTrue,1);
+    g_MainScheduler.attach(&UniqueADC,TaskType_Always, TaskActiveTrue);
     // - Run the Setup for the scheduler and all tasks
     g_MainScheduler.setup();
     // - Main Loop
@@ -87,4 +114,17 @@ extern "C"
 		g_SystemTicks++;
 		return;
 	}
+
+	// - Handle ADC
+    void ADC14_IRQHandler(void)
+    {
+        __disable_irq();
+        // To get light sensor data
+        g_i16AdcXResult = ADC14->MEM[0];
+        g_i16AdcYResult = ADC14->MEM[1];
+        g_i16AdcZResult = ADC14->MEM[2];
+        ADC14->CLRIFGR0 = ADC14_CLRIFGR0_CLRIFG0 | ADC14_CLRIFGR0_CLRIFG1 | ADC14_CLRIFGR0_CLRIFG2;
+        __enable_irq();
+        return;
+    }
 }

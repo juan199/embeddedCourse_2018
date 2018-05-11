@@ -4,73 +4,56 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../ADC_en.cpp \
-../LED.cpp \
-../Mailbox.cpp \
-../Scheduler.cpp \
-../Task.cpp \
+../functions.cpp \
 ../main.cpp 
 
 CMD_SRCS += \
 ../msp432p401r.cmd 
 
 C_SRCS += \
-../startup_msp432p401r_ccs.c \
+../HAL_I2C.c \
+../HAL_OPT3001.c \
 ../system_msp432p401r.c 
 
 C_DEPS += \
-./startup_msp432p401r_ccs.d \
+./HAL_I2C.d \
+./HAL_OPT3001.d \
 ./system_msp432p401r.d 
 
 OBJS += \
-./ADC_en.obj \
-./LED.obj \
-./Mailbox.obj \
-./Scheduler.obj \
-./Task.obj \
+./HAL_I2C.obj \
+./HAL_OPT3001.obj \
+./functions.obj \
 ./main.obj \
-./startup_msp432p401r_ccs.obj \
 ./system_msp432p401r.obj 
 
 CPP_DEPS += \
-./ADC_en.d \
-./LED.d \
-./Mailbox.d \
-./Scheduler.d \
-./Task.d \
+./functions.d \
 ./main.d 
 
 OBJS__QUOTED += \
-"ADC_en.obj" \
-"LED.obj" \
-"Mailbox.obj" \
-"Scheduler.obj" \
-"Task.obj" \
+"HAL_I2C.obj" \
+"HAL_OPT3001.obj" \
+"functions.obj" \
 "main.obj" \
-"startup_msp432p401r_ccs.obj" \
 "system_msp432p401r.obj" 
 
 C_DEPS__QUOTED += \
-"startup_msp432p401r_ccs.d" \
+"HAL_I2C.d" \
+"HAL_OPT3001.d" \
 "system_msp432p401r.d" 
 
 CPP_DEPS__QUOTED += \
-"ADC_en.d" \
-"LED.d" \
-"Mailbox.d" \
-"Scheduler.d" \
-"Task.d" \
+"functions.d" \
 "main.d" 
 
-CPP_SRCS__QUOTED += \
-"../ADC_en.cpp" \
-"../LED.cpp" \
-"../Scheduler.cpp" \
-"../Task.cpp" \
-"../main.cpp" 
-
 C_SRCS__QUOTED += \
-"../startup_msp432p401r_ccs.c" \
+"../HAL_I2C.c" \
+"../HAL_OPT3001.c" \
 "../system_msp432p401r.c" 
+
+CPP_SRCS__QUOTED += \
+"../functions.cpp" \
+"../main.cpp" 
 
 

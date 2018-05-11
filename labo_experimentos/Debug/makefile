@@ -2,22 +2,28 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-CG_TOOL_ROOT := /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS
+CG_TOOL_ROOT := /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS
 
 GEN_OPTS__FLAG := 
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
-"./ADC_en.obj" \
-"./LED.obj" \
-"./Mailbox.obj" \
-"./Scheduler.obj" \
-"./Task.obj" \
+"./HAL_I2C.obj" \
+"./HAL_OPT3001.obj" \
+"./functions.obj" \
 "./main.obj" \
-"./startup_msp432p401r_ccs.obj" \
 "./system_msp432p401r.obj" \
+"./LcdDriver/Crystalfontz128x128_ST7735.obj" \
+"./LcdDriver/HAL_MSP_EXP432P401R_Crystalfontz128x128_ST7735.obj" \
+"./ccs/startup_msp432p401r_ccs.obj" \
 "../msp432p401r.cmd" \
 $(GEN_CMDS__FLAG) \
+-l"ti/display/lib/display.aem4f" \
+-l"ti/grlib/lib/ccs/m4f/grlib.a" \
+-l"third_party/spiffs/lib/ccs/m4f/spiffs.a" \
+-l"ti/drivers/lib/drivers_msp432p401x.aem4f" \
+-l"third_party/fatfs/lib/ccs/m4f/fatfs.a" \
+-l"ti/devices/msp432p4xx/driverlib/ccs/msp432p4xx_driverlib.lib" \
 -llibc.a \
 
 -include ../makefile.init
@@ -28,7 +34,11 @@ RMDIR := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
+-include LcdDriver/subdir_vars.mk
+-include ccs/subdir_vars.mk
 -include subdir_rules.mk
+-include LcdDriver/subdir_rules.mk
+-include ccs/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -125,43 +135,43 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-labo2.out \
+labo_experimentos.out \
 
 EXE_OUTPUTS__QUOTED += \
-"labo2.out" \
+"labo_experimentos.out" \
 
 BIN_OUTPUTS += \
-labo2.hex \
+labo_experimentos.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"labo2.hex" \
+"labo_experimentos.hex" \
 
 
 # All Target
 all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
-	@$(MAKE) --no-print-directory -Onone "labo2.out"
+	@$(MAKE) --no-print-directory -Onone "labo_experimentos.out"
 
 # Tool invocations
-labo2.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+labo_experimentos.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: ARM Linker'
-	"/home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --advice:power=all --define=__MSP432P401R__ --define=ccs -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"labo2.map" --heap_size=1024 --stack_size=512 -i"/home/sama/ti/ccsv7/ccs_base/arm/include" -i"/home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/lib" -i"/home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="labo2_linkInfo.xml" --rom_model -o "labo2.out" $(ORDERED_OBJS)
+	"/home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --advice:power=none --define=__MSP432P401R__ --define=DeviceFamily_MSP432P401x -g --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on -z -m"labo_experimentos.map" --stack_size=512 -i"/home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/lib" -i"/home/sama/ti/simplelink_msp432p4_sdk_2_10_00_14/source" -i"/home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="labo_experimentos_linkInfo.xml" --rom_model -o "labo_experimentos.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
-labo2.hex: $(EXE_OUTPUTS)
+labo_experimentos.hex: $(EXE_OUTPUTS)
 	@echo 'Building files: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo 'Invoking: ARM Hex Utility'
-	"/home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/bin/armhex" --memwidth=8 --romwidth=8 -o "labo2.hex" $(EXE_OUTPUTS__QUOTED)
+	"/home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/bin/armhex"  -o "labo_experimentos.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "ADC_en.obj" "LED.obj" "Mailbox.obj" "Scheduler.obj" "Task.obj" "main.obj" "startup_msp432p401r_ccs.obj" "system_msp432p401r.obj" 
-	-$(RM) "startup_msp432p401r_ccs.d" "system_msp432p401r.d" 
-	-$(RM) "ADC_en.d" "LED.d" "Mailbox.d" "Scheduler.d" "Task.d" "main.d" 
+	-$(RM) "HAL_I2C.obj" "HAL_OPT3001.obj" "functions.obj" "main.obj" "system_msp432p401r.obj" "LcdDriver/Crystalfontz128x128_ST7735.obj" "LcdDriver/HAL_MSP_EXP432P401R_Crystalfontz128x128_ST7735.obj" "ccs/startup_msp432p401r_ccs.obj" 
+	-$(RM) "HAL_I2C.d" "HAL_OPT3001.d" "system_msp432p401r.d" "LcdDriver/Crystalfontz128x128_ST7735.d" "LcdDriver/HAL_MSP_EXP432P401R_Crystalfontz128x128_ST7735.d" "ccs/startup_msp432p401r_ccs.d" 
+	-$(RM) "functions.d" "main.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
