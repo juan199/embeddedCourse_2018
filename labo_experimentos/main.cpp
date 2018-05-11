@@ -2,6 +2,10 @@
 
 // Including files to use Driver Lib, some C functions and I2C + light sensor modules
 
+
+// preguntas al profe
+// el ADC
+
 extern "C"
 {
     #include <ti/devices/msp432p4xx/inc/msp.h>
@@ -53,6 +57,10 @@ uint32_t g_u32_second3Data = 0;
 uint32_t g_u32_second4Data = 0;
 uint32_t g_u32_second5Data = 0;
 uint32_t g_u32_second6Data = 0;
+
+//----------------------------------
+
+int contador = 0;
 
 // Functions
 

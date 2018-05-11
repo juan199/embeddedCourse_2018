@@ -29,6 +29,7 @@ main.obj: /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/stdli
 main.obj: /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/_ti_config.h
 main.obj: /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/linkage.h
 main.obj: ../LED.hpp
+main.obj: ../ADC_en.hpp
 
 ../main.cpp: 
 /home/sama/ti/ccsv7/ccs_base/arm/include/msp.h: 
@@ -59,3 +60,4 @@ main.obj: ../LED.hpp
 /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/_ti_config.h: 
 /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/linkage.h: 
 ../LED.hpp: 
+../ADC_en.hpp: 

@@ -34,7 +34,7 @@ void AdcSetup()
 {
     ADC14->CTL0 = ADC14_CTL0_PDIV_0 | ADC14_CTL0_SHS_0 | ADC14_CTL0_DIV_7 |
                   ADC14_CTL0_SSEL__MCLK | ADC14_CTL0_SHT0_1 | ADC14_CTL0_ON
-                  | ADC14_CTL0_SHP | ADC14_CTL0_CONSEQ_1; // not diving the ADC's clk | using ADC pin to sample and hold
+                  | ADC14_CTL0_SHP | ADC14_CTL0_CONSEQ_3; // not diving the ADC's clk | using ADC pin to sample and hold
                                     // time to sample | turn the converter on | ADC14_CTL0_CONSEQ_1 para que lea los 32 canales
     //ADC14->CTL1 = ADC14_CTL1_CH3MAP;
     ADC14->MCTL[0] = ADC14_MCTLN_INCH_11 | ADC14_MCTLN_VRSEL_0; // X | VCC & VSS
