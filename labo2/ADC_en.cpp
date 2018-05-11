@@ -23,9 +23,9 @@ uint8_t ADC_en::setup()
                   | ADC14_CTL0_SHP | ADC14_CTL0_CONSEQ_3; // not diving the ADC's clk | using ADC pin to sample and hold
                                     // time to sample | turn the converter on | ADC14_CTL0_CONSEQ_1 para que lea los 32 canales
     ADC14->CTL1 = ADC14_CTL1_DF;
-    ADC14->MCTL[0] = ADC14_MCTLN_INCH_11 | ADC14_MCTLN_VRSEL_0; // X | VCC & VSS
+    ADC14->MCTL[0] = ADC14_MCTLN_INCH_14 | ADC14_MCTLN_VRSEL_0; // X | VCC & VSS
     ADC14->MCTL[1] = ADC14_MCTLN_INCH_13 | ADC14_MCTLN_VRSEL_0; // Y | VCC & VSS
-    ADC14->MCTL[2] = ADC14_MCTLN_INCH_14 | ADC14_MCTLN_VRSEL_0; // Z | VCC & VSS
+    ADC14->MCTL[2] = ADC14_MCTLN_INCH_11 | ADC14_MCTLN_VRSEL_0; // Z | VCC & VSS
     ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_ENC; //ADC14 Conversion Enable
     ADC14->IER0 = ADC14_IER0_IE0 | ADC14_IER0_IE1 | ADC14_IER0_IE2;   // Enables ADC14's interrupt
 

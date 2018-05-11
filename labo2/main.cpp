@@ -15,6 +15,13 @@ Mailbox* g_Mailbox = Mailbox::getMailbox();
 Scheduler g_MainScheduler; // - Instantiate a Scheduler
 
 // pasar a la clase del ADC
+//sin signo
+/*
+uint16_t g_ui16AdcXResult = 0U;
+uint16_t g_ui16AdcYResult = 0U;
+uint16_t g_ui16AdcZResult = 0U;
+*/
+// con signo
 int16_t g_i16AdcXResult = 0U;
 int16_t g_i16AdcYResult = 0U;
 int16_t g_i16AdcZResult = 0U;
