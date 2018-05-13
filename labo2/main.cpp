@@ -4,6 +4,9 @@
 #include "Task.hpp"
 #include "LED.hpp"
 #include "ADC_en.hpp"
+#include "AngleCalc.hpp"
+#include <math.h>
+#include "global.hpp"
 
 // ##########################
 // Global/Static declarations
@@ -22,9 +25,14 @@ uint16_t g_ui16AdcYResult = 0U;
 uint16_t g_ui16AdcZResult = 0U;
 */
 // con signo
+
 int16_t g_i16AdcXResult = 0U;
 int16_t g_i16AdcYResult = 0U;
 int16_t g_i16AdcZResult = 0U;
+
+//pasar a la clase del AngleCalc
+int16_t g_iAngleResult = 0U;
+
 // #########################
 //          MAIN
 // #########################
@@ -34,6 +42,7 @@ void main(void)
     LED BlueLED(BIT2);
     LED GreenLED(BIT1);
     ADC_en UniqueADC(BIT1);
+    AngleCalc Angle(BIT1);
 
     // ponerle un encabezado: configura los pines del acelerómetro (pasar
     // al setup del ADC)
@@ -53,6 +62,7 @@ void main(void)
     g_MainScheduler.attach(&GreenLED, TaskType_Periodic,TaskActiveFalse,600); // cambiar a True con un botón
     //g_MainScheduler.attach(&UniqueADC,TaskType_Periodic, TaskActiveTrue,1);
     g_MainScheduler.attach(&UniqueADC,TaskType_Always, TaskActiveTrue);
+    g_MainScheduler.attach(&Angle,TaskType_Periodic, TaskActiveTrue,32);
     // - Run the Setup for the scheduler and all tasks
     g_MainScheduler.setup();
     // - Main Loop

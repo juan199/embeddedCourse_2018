@@ -3,6 +3,7 @@
 //constructor
 // hay algo que está mal, porque el constructor no
 // debería tener que revisar NADA en esta clase
+
 ADC_en::ADC_en(uint16_t i_BITN)
 {
     m_u16BITNN = i_BITN;

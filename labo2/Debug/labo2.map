@@ -1,36 +1,36 @@
 ******************************************************************************
                   TI ARM Linker Unix v18.1.1                   
 ******************************************************************************
->> Linked Thu May 10 18:43:58 2018
+>> Linked Fri May 11 12:34:20 2018
 
 OUTPUT FILE NAME:   <labo2.out>
-ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 00000e3d
+ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 000016b1
 
 
 MEMORY CONFIGURATION
 
          name            origin    length      used     unused   attr    fill
 ----------------------  --------  ---------  --------  --------  ----  --------
-  MAIN                  00000000   00040000  000010cf  0003ef31  R  X
+  MAIN                  00000000   00040000  00001a33  0003e5cd  R  X
   INFO                  00200000   00004000  00000000  00004000  R  X
-  SRAM_CODE             01000000   00010000  0000460c  0000b9f4  RW X
-  SRAM_DATA             20000000   00010000  0000460c  0000b9f4  RW  
+  SRAM_CODE             01000000   00010000  00004610  0000b9f0  RW X
+  SRAM_DATA             20000000   00010000  00004610  0000b9f0  RW  
 
 
 SEGMENT ALLOCATION MAP
 
 run origin  load origin   length   init length attrs members
 ----------  ----------- ---------- ----------- ----- -------
-00000000    00000000    000010d0   000010d0    r-x
+00000000    00000000    00001a38   00001a38    r-x
   00000000    00000000    000000e4   000000e4    r-- .intvecs
-  000000e4    000000e4    00000ea4   00000ea4    r-x .text
-  00000f88    00000f88    000000fb   000000fb    r-- .const
-  00001084    00001084    00000004   00000004    r-- .init_array
-  00001088    00001088    00000048   00000048    r-- .cinit
-20000000    20000000    0000440c   00000000    rw-
+  000000e4    000000e4    00001748   00001748    r-x .text
+  0000182c    0000182c    00000004   00000004    r-- .init_array
+  00001830    00001830    000001bb   000001bb    r-- .const
+  000019f0    000019f0    00000048   00000048    r-- .cinit
+20000000    20000000    00004410   00000000    rw-
   20000000    20000000    00003fe0   00000000    rw- .bss
   20003fe0    20003fe0    00000400   00000000    rw- .sysmem
-  200043e0    200043e0    0000002c   00000000    rw- .data
+  200043e0    200043e0    00000030   00000000    rw- .data
 2000fe00    2000fe00    00000200   00000000    rw-
   2000fe00    2000fe00    00000200   00000000    rw- .stack
 
@@ -45,76 +45,89 @@ section   page    origin      length       input sections
 
 .binit     0    00000000    00000000     
 
-.text      0    000000e4    00000ea4     
+.text      0    000000e4    00001748     
                   000000e4    0000032c     system_msp432p401r.obj (.text)
-                  00000410    00000262     Scheduler.obj (.text)
-                  00000672    00000002     rtsv7M4_T_le_v4SPD16_eabi.lib : stdlib_typeinfo.cpp.obj (.text:_ZNSt9type_infoD1Ev)
-                  00000674    000001d4     main.obj (.text)
-                  00000848    00000114     ADC_en.obj (.text)
-                  0000095c    000000d8     rtsv7M4_T_le_v4SPD16_eabi.lib : memory.c.obj (.text:free)
-                  00000a34    0000009c     Mailbox.obj (.text)
-                  00000ad0    0000009c     rtsv7M4_T_le_v4SPD16_eabi.lib : memcpy_t2.asm.obj (.text)
-                  00000b6c    0000007a                                   : memset_t2.asm.obj (.text)
-                  00000be6    00000002                                   : _lock.c.obj (.text:_nop)
-                  00000be8    00000078                                   : memory.c.obj (.text:malloc)
-                  00000c60    00000070     Task.obj (.text)
-                  00000cd0    00000068     LED.obj (.text)
-                  00000d38    00000068     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
-                  00000da0    00000060                                   : autoinit.c.obj (.text:__TI_auto_init_nobinit:__TI_auto_init_nobinit)
-                  00000e00    0000003c                                   : memory.c.obj (.text:minsert)
-                  00000e3c    00000038                                   : boot_cortex_m.c.obj (.text:_c_int00_noargs:_c_int00_noargs)
-                  00000e74    00000038                                   : memory.c.obj (.text:minit)
-                  00000eac    00000028                                   : memory.c.obj (.text:mremove)
-                  00000ed4    00000022                                   : new.cpp.obj (.text:_Znwj)
-                  00000ef6    0000000e                                   : typeinfo.c.obj (.text:_ZN10__cxxabiv117__class_type_infoD0Ev)
-                  00000f04    0000000e                                   : typeinfo.c.obj (.text:_ZN10__cxxabiv120__si_class_type_infoD0Ev)
-                  00000f12    0000000e                                   : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
-                  00000f20    0000000e     startup_msp432p401r_ccs.obj (.text)
-                  00000f2e    0000000c     Task.obj (.text:_ZN4Task3runEv)
-                  00000f3a    0000000c     Task.obj (.text:_ZN4Task5setupEv)
-                  00000f46    0000000c     Mailbox.obj (.text:_ZN7MailboxC1Ev)
-                  00000f52    00000002     --HOLE-- [fill = 0]
-                  00000f54    0000000c     rtsv7M4_T_le_v4SPD16_eabi.lib : new.cpp.obj (.text:_ZSt15get_new_handlerv)
-                  00000f60    0000000c                                   : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init)
-                  00000f6c    00000008                                   : new.cpp.obj (.text:_ZdlPv)
-                  00000f74    00000004                                   : typeinfo.c.obj (.text:_ZN10__cxxabiv117__class_type_infoD1Ev)
-                  00000f78    00000004                                   : typeinfo.c.obj (.text:_ZN10__cxxabiv120__si_class_type_infoD1Ev)
-                  00000f7c    00000004                                   : new.cpp.obj (.text:_ZdlPvj)
-                  00000f80    00000004                                   : pre_init.c.obj (.text:_system_pre_init)
-                  00000f84    00000004                                   : exit.c.obj (.text:abort:abort)
+                  00000410    000002ec     rtsv7M4_T_le_v4SPD16_eabi.lib : s_atan.c.obj (.text:atan)
+                  000006fc    00000262     Scheduler.obj (.text)
+                  0000095e    00000002     rtsv7M4_T_le_v4SPD16_eabi.lib : stdlib_typeinfo.cpp.obj (.text:_ZNSt9type_infoD1Ev)
+                  00000960    000001f0     main.obj (.text)
+                  00000b50    000001b6     rtsv7M4_T_le_v4SPD16_eabi.lib : fd_add_t2.asm.obj (.text)
+                  00000d06    00000136                                   : fd_div_t2.asm.obj (.text)
+                  00000e3c    00000114     ADC_en.obj (.text)
+                  00000f50    000000fc     rtsv7M4_T_le_v4SPD16_eabi.lib : fd_mul_t2.asm.obj (.text)
+                  0000104c    000000d8                                   : memory.c.obj (.text:free)
+                  00001124    000000b8     AngleCalc.obj (.text)
+                  000011dc    0000009c     Mailbox.obj (.text)
+                  00001278    0000009c     rtsv7M4_T_le_v4SPD16_eabi.lib : memcpy_t2.asm.obj (.text)
+                  00001314    00000086                                   : fd_cmp_t2.asm.obj (.text:__aeabi_cdrcmple)
+                  0000139a    0000007a                                   : memset_t2.asm.obj (.text)
+                  00001414    00000078                                   : memory.c.obj (.text:malloc)
+                  0000148c    00000070     Task.obj (.text)
+                  000014fc    00000068     LED.obj (.text)
+                  00001564    00000068     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
+                  000015cc    00000060                                   : autoinit.c.obj (.text:__TI_auto_init_nobinit:__TI_auto_init_nobinit)
+                  0000162c    00000048                                   : fd_toi_t2.asm.obj (.text)
+                  00001674    0000003c                                   : memory.c.obj (.text:minsert)
+                  000016b0    00000038                                   : boot_cortex_m.c.obj (.text:_c_int00_noargs:_c_int00_noargs)
+                  000016e8    00000038                                   : memory.c.obj (.text:minit)
+                  00001720    0000002e                                   : i_tofd_t2.asm.obj (.text)
+                  0000174e    00000002                                   : _lock.c.obj (.text:_nop)
+                  00001750    00000028                                   : memory.c.obj (.text:mremove)
+                  00001778    00000022                                   : new.cpp.obj (.text:_Znwj)
+                  0000179a    0000000e                                   : typeinfo.c.obj (.text:_ZN10__cxxabiv117__class_type_infoD0Ev)
+                  000017a8    0000000e                                   : typeinfo.c.obj (.text:_ZN10__cxxabiv120__si_class_type_infoD0Ev)
+                  000017b6    0000000e                                   : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
+                  000017c4    0000000e     startup_msp432p401r_ccs.obj (.text)
+                  000017d2    0000000c     Task.obj (.text:_ZN4Task3runEv)
+                  000017de    0000000c     Task.obj (.text:_ZN4Task5setupEv)
+                  000017ea    0000000c     Mailbox.obj (.text:_ZN7MailboxC1Ev)
+                  000017f6    00000002     --HOLE-- [fill = 0]
+                  000017f8    0000000c     rtsv7M4_T_le_v4SPD16_eabi.lib : new.cpp.obj (.text:_ZSt15get_new_handlerv)
+                  00001804    0000000c                                   : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init)
+                  00001810    00000008                                   : new.cpp.obj (.text:_ZdlPv)
+                  00001818    00000004                                   : typeinfo.c.obj (.text:_ZN10__cxxabiv117__class_type_infoD1Ev)
+                  0000181c    00000004                                   : typeinfo.c.obj (.text:_ZN10__cxxabiv120__si_class_type_infoD1Ev)
+                  00001820    00000004                                   : new.cpp.obj (.text:_ZdlPvj)
+                  00001824    00000004                                   : pre_init.c.obj (.text:_system_pre_init)
+                  00001828    00000004                                   : exit.c.obj (.text:abort:abort)
 
-.const     0    00000f88    000000fb     
-                  00000f88    00000025     rtsv7M4_T_le_v4SPD16_eabi.lib : typeinfo.c.obj (.const:.typeinfo:_ZTSN10__cxxabiv120__si_class_type_infoE)
-                  00000fad    00000022                                   : typeinfo.c.obj (.const:.typeinfo:_ZTSN10__cxxabiv117__class_type_infoE)
-                  00000fcf    00000001     --HOLE-- [fill = 0]
-                  00000fd0    00000010     LED.obj (.const:_ZTV3LED)
-                  00000fe0    00000010     Task.obj (.const:_ZTV4Task)
-                  00000ff0    00000010     ADC_en.obj (.const:_ZTV6ADC_en)
-                  00001000    00000010     rtsv7M4_T_le_v4SPD16_eabi.lib : typeinfo.c.obj (.const:_ZTVN10__cxxabiv117__class_type_infoE)
-                  00001010    00000010                                   : typeinfo.c.obj (.const:_ZTVN10__cxxabiv120__si_class_type_infoE)
-                  00001020    0000000d                                   : stdlib_typeinfo.cpp.obj (.const:.typeinfo:_ZTSSt9type_info)
-                  0000102d    00000003     --HOLE-- [fill = 0]
-                  00001030    0000000c     LED.obj (.const:.typeinfo:_ZTI3LED)
-                  0000103c    0000000c     ADC_en.obj (.const:.typeinfo:_ZTI6ADC_en)
-                  00001048    0000000c     rtsv7M4_T_le_v4SPD16_eabi.lib : typeinfo.c.obj (.const:.typeinfo:_ZTIN10__cxxabiv117__class_type_infoE)
-                  00001054    0000000c                                   : typeinfo.c.obj (.const:.typeinfo:_ZTIN10__cxxabiv120__si_class_type_infoE)
-                  00001060    00000008     ADC_en.obj (.const:.typeinfo:_ZTI4Task)
-                  00001068    00000008     rtsv7M4_T_le_v4SPD16_eabi.lib : stdlib_typeinfo.cpp.obj (.const:.typeinfo:_ZTISt9type_info)
-                  00001070    00000008     ADC_en.obj (.const:.typeinfo:_ZTS6ADC_en)
-                  00001078    00000006     ADC_en.obj (.const:.typeinfo:_ZTS4Task)
-                  0000107e    00000005     LED.obj (.const:.typeinfo:_ZTS3LED)
+.const     0    00001830    000001bb     
+                  00001830    00000098     rtsv7M4_T_le_v4SPD16_eabi.lib : s_atan.c.obj (.const:$O1$$)
+                  000018c8    00000025                                   : typeinfo.c.obj (.const:.typeinfo:_ZTSN10__cxxabiv120__si_class_type_infoE)
+                  000018ed    00000022                                   : typeinfo.c.obj (.const:.typeinfo:_ZTSN10__cxxabiv117__class_type_infoE)
+                  0000190f    00000001     --HOLE-- [fill = 0]
+                  00001910    00000010     LED.obj (.const:_ZTV3LED)
+                  00001920    00000010     Task.obj (.const:_ZTV4Task)
+                  00001930    00000010     ADC_en.obj (.const:_ZTV6ADC_en)
+                  00001940    00000010     AngleCalc.obj (.const:_ZTV9AngleCalc)
+                  00001950    00000010     rtsv7M4_T_le_v4SPD16_eabi.lib : typeinfo.c.obj (.const:_ZTVN10__cxxabiv117__class_type_infoE)
+                  00001960    00000010                                   : typeinfo.c.obj (.const:_ZTVN10__cxxabiv120__si_class_type_infoE)
+                  00001970    0000000d                                   : stdlib_typeinfo.cpp.obj (.const:.typeinfo:_ZTSSt9type_info)
+                  0000197d    00000003     --HOLE-- [fill = 0]
+                  00001980    0000000c     LED.obj (.const:.typeinfo:_ZTI3LED)
+                  0000198c    0000000c     ADC_en.obj (.const:.typeinfo:_ZTI6ADC_en)
+                  00001998    0000000c     AngleCalc.obj (.const:.typeinfo:_ZTI9AngleCalc)
+                  000019a4    0000000c     rtsv7M4_T_le_v4SPD16_eabi.lib : typeinfo.c.obj (.const:.typeinfo:_ZTIN10__cxxabiv117__class_type_infoE)
+                  000019b0    0000000c                                   : typeinfo.c.obj (.const:.typeinfo:_ZTIN10__cxxabiv120__si_class_type_infoE)
+                  000019bc    0000000b     AngleCalc.obj (.const:.typeinfo:_ZTS9AngleCalc)
+                  000019c7    00000001     --HOLE-- [fill = 0]
+                  000019c8    00000008     ADC_en.obj (.const:.typeinfo:_ZTI4Task)
+                  000019d0    00000008     rtsv7M4_T_le_v4SPD16_eabi.lib : stdlib_typeinfo.cpp.obj (.const:.typeinfo:_ZTISt9type_info)
+                  000019d8    00000008     ADC_en.obj (.const:.typeinfo:_ZTS6ADC_en)
+                  000019e0    00000006     ADC_en.obj (.const:.typeinfo:_ZTS4Task)
+                  000019e6    00000005     LED.obj (.const:.typeinfo:_ZTS3LED)
 
-.cinit     0    00001088    00000048     
-                  00001088    0000001d     (.cinit..data.load) [load image, compression = lzss]
-                  000010a5    00000003     --HOLE-- [fill = 0]
-                  000010a8    0000000c     (__TI_handler_table)
-                  000010b4    00000004     --HOLE-- [fill = 0]
-                  000010b8    00000008     (.cinit..bss.load) [load image, compression = zero_init]
-                  000010c0    00000010     (__TI_cinit_table)
+.cinit     0    000019f0    00000048     
+                  000019f0    0000001e     (.cinit..data.load) [load image, compression = lzss]
+                  00001a0e    00000002     --HOLE-- [fill = 0]
+                  00001a10    0000000c     (__TI_handler_table)
+                  00001a1c    00000004     --HOLE-- [fill = 0]
+                  00001a20    00000008     (.cinit..bss.load) [load image, compression = zero_init]
+                  00001a28    00000010     (__TI_cinit_table)
 
 .init_array 
-*          0    00001084    00000004     
-                  00001084    00000004     main.obj (.init_array)
+*          0    0000182c    00000004     
+                  0000182c    00000004     main.obj (.init_array)
 
 .bss       0    20000000    00003fe0     UNINITIALIZED
                   20000000    00003fd8     main.obj (.bss:g_MainScheduler)
@@ -125,13 +138,13 @@ section   page    origin      length       input sections
                   20003fe0    00000008     rtsv7M4_T_le_v4SPD16_eabi.lib : memory.c.obj (.sysmem)
                   20003fe8    000003f8     --HOLE--
 
-.data      0    200043e0    0000002c     UNINITIALIZED
-                  200043e0    0000000f     main.obj (.data)
-                  200043ef    00000001     --HOLE--
-                  200043f0    0000000c     rtsv7M4_T_le_v4SPD16_eabi.lib : memory.c.obj (.data:$O1$$)
-                  200043fc    00000008                                   : _lock.c.obj (.data:$O1$$)
-                  20004404    00000004     Mailbox.obj (.data)
-                  20004408    00000004     system_msp432p401r.obj (.data)
+.data      0    200043e0    00000030     UNINITIALIZED
+                  200043e0    00000011     main.obj (.data)
+                  200043f1    00000003     --HOLE--
+                  200043f4    0000000c     rtsv7M4_T_le_v4SPD16_eabi.lib : memory.c.obj (.data:$O1$$)
+                  20004400    00000008                                   : _lock.c.obj (.data:$O1$$)
+                  20004408    00000004     Mailbox.obj (.data)
+                  2000440c    00000004     system_msp432p401r.obj (.data)
 
 .stack     0    2000fe00    00000200     UNINITIALIZED
                   2000fe00    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : boot_cortex_m.c.obj (.stack)
@@ -142,26 +155,34 @@ MODULE SUMMARY
        Module                        code   ro data   rw data
        ------                        ----   -------   -------
     ./
-       main.obj                      468    4         32726  
+       main.obj                      496    4         32730  
        system_msp432p401r.obj        812    0         8      
        Scheduler.obj                 610    0         0      
        ADC_en.obj                    276    50        0      
        startup_msp432p401r_ccs.obj   14     228       0      
+       AngleCalc.obj                 184    39        0      
        Mailbox.obj                   168    0         8      
        Task.obj                      136    16        0      
        LED.obj                       104    33        0      
     +--+-----------------------------+------+---------+---------+
-       Total:                        2588   331       32742  
+       Total:                        2800   370       32746  
                                                              
     /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/lib/rtsv7M4_T_le_v4SPD16_eabi.lib
+       s_atan.c.obj                  748    152       0      
        memory.c.obj                  492    0         24     
+       fd_add_t2.asm.obj             438    0         0      
+       fd_div_t2.asm.obj             310    0         0      
+       fd_mul_t2.asm.obj             252    0         0      
        typeinfo.c.obj                36     127       0      
        memcpy_t2.asm.obj             156    0         0      
+       fd_cmp_t2.asm.obj             134    0         0      
        memset_t2.asm.obj             122    0         0      
        copy_decompress_lzss.c.obj    104    0         0      
        autoinit.c.obj                96     0         0      
+       fd_toi_t2.asm.obj             72     0         0      
        new.cpp.obj                   58     0         8      
        boot_cortex_m.c.obj           56     0         0      
+       i_tofd_t2.asm.obj             46     0         0      
        stdlib_typeinfo.cpp.obj       2      21        0      
        _lock.c.obj                   2      0         16     
        copy_decompress_none.c.obj    14     0         0      
@@ -169,25 +190,25 @@ MODULE SUMMARY
        exit.c.obj                    4      0         0      
        pre_init.c.obj                4      0         0      
     +--+-----------------------------+------+---------+---------+
-       Total:                        1158   148       48     
+       Total:                        3158   300       48     
                                                              
        Heap:                         0      0         2048   
        Stack:                        0      0         1024   
-       Linker Generated:             0      65        0      
+       Linker Generated:             0      66        0      
     +--+-----------------------------+------+---------+---------+
-       Grand Total:                  3746   544       35862  
+       Grand Total:                  5958   736       35866  
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 000010c0 records: 2, size/record: 8, table size: 16
-	.data: load addr=00001088, load size=0000001d bytes, run addr=200043e0, run size=0000002c bytes, compression=lzss
-	.bss: load addr=000010b8, load size=00000008 bytes, run addr=20000000, run size=00003fe0 bytes, compression=zero_init
+__TI_cinit_table @ 00001a28 records: 2, size/record: 8, table size: 16
+	.data: load addr=000019f0, load size=0000001e bytes, run addr=200043e0, run size=00000030 bytes, compression=lzss
+	.bss: load addr=00001a20, load size=00000008 bytes, run addr=20000000, run size=00003fe0 bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 000010a8 records: 3, size/record: 4, table size: 12
+__TI_handler_table @ 00001a10 records: 3, size/record: 4, table size: 12
 	index: 0, handler: __TI_decompress_lzss
 	index: 1, handler: __TI_decompress_none
 	index: 2, handler: __TI_zero_init
@@ -197,175 +218,192 @@ GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name
 
 address   name                                             
 -------   ----                                             
-000007c7  ADC14_IRQHandler                                 
-000007c7  ADC14_IRQHandler                                 
-00000f2d  AES256_IRQHandler                                
-00000f2d  BusFault_Handler                                 
-00000f85  C$$EXIT                                          
-00000f2d  COMP_E0_IRQHandler                               
-00000f2d  COMP_E1_IRQHandler                               
-00000f2d  CS_IRQHandler                                    
-00000f2d  DMA_ERR_IRQHandler                               
-00000f2d  DMA_INT0_IRQHandler                              
-00000f2d  DMA_INT1_IRQHandler                              
-00000f2d  DMA_INT2_IRQHandler                              
-00000f2d  DMA_INT3_IRQHandler                              
-00000f2d  DebugMon_Handler                                 
-00000f2d  Default_Handler                                  
-00000f2d  EUSCIA0_IRQHandler                               
-00000f2d  EUSCIA1_IRQHandler                               
-00000f2d  EUSCIA2_IRQHandler                               
-00000f2d  EUSCIA3_IRQHandler                               
-00000f2d  EUSCIB0_IRQHandler                               
-00000f2d  EUSCIB1_IRQHandler                               
-00000f2d  EUSCIB2_IRQHandler                               
-00000f2d  EUSCIB3_IRQHandler                               
-00000f2d  FLCTL_IRQHandler                                 
-00000f2d  FPU_IRQHandler                                   
-00000f2d  HardFault_Handler                                
-00000f2d  MemManage_Handler                                
-00000f2d  NMI_Handler                                      
-00000f2d  PCM_IRQHandler                                   
-00000f2d  PORT1_IRQHandler                                 
-00000f2d  PORT2_IRQHandler                                 
-00000f2d  PORT3_IRQHandler                                 
-00000f2d  PORT4_IRQHandler                                 
-00000f2d  PORT5_IRQHandler                                 
-00000f2d  PORT6_IRQHandler                                 
-00000f2d  PSS_IRQHandler                                   
-00000f2d  PendSV_Handler                                   
-00000f2d  RTC_C_IRQHandler                                 
-00000f21  Reset_Handler                                    
-00001084  SHT$$INIT_ARRAY$$Base                            
-00001088  SHT$$INIT_ARRAY$$Limit                           
-00000f2d  SVC_Handler                                      
-00000f2d  SysTick_Handler                                  
-20004408  SystemCoreClock                                  
+00000acf  ADC14_IRQHandler                                 
+00000acf  ADC14_IRQHandler                                 
+000017d1  AES256_IRQHandler                                
+000017d1  BusFault_Handler                                 
+00001829  C$$EXIT                                          
+000017d1  COMP_E0_IRQHandler                               
+000017d1  COMP_E1_IRQHandler                               
+000017d1  CS_IRQHandler                                    
+000017d1  DMA_ERR_IRQHandler                               
+000017d1  DMA_INT0_IRQHandler                              
+000017d1  DMA_INT1_IRQHandler                              
+000017d1  DMA_INT2_IRQHandler                              
+000017d1  DMA_INT3_IRQHandler                              
+000017d1  DebugMon_Handler                                 
+000017d1  Default_Handler                                  
+000017d1  EUSCIA0_IRQHandler                               
+000017d1  EUSCIA1_IRQHandler                               
+000017d1  EUSCIA2_IRQHandler                               
+000017d1  EUSCIA3_IRQHandler                               
+000017d1  EUSCIB0_IRQHandler                               
+000017d1  EUSCIB1_IRQHandler                               
+000017d1  EUSCIB2_IRQHandler                               
+000017d1  EUSCIB3_IRQHandler                               
+000017d1  FLCTL_IRQHandler                                 
+000017d1  FPU_IRQHandler                                   
+000017d1  HardFault_Handler                                
+000017d1  MemManage_Handler                                
+000017d1  NMI_Handler                                      
+000017d1  PCM_IRQHandler                                   
+000017d1  PORT1_IRQHandler                                 
+000017d1  PORT2_IRQHandler                                 
+000017d1  PORT3_IRQHandler                                 
+000017d1  PORT4_IRQHandler                                 
+000017d1  PORT5_IRQHandler                                 
+000017d1  PORT6_IRQHandler                                 
+000017d1  PSS_IRQHandler                                   
+000017d1  PendSV_Handler                                   
+000017d1  RTC_C_IRQHandler                                 
+000017c5  Reset_Handler                                    
+0000182c  SHT$$INIT_ARRAY$$Base                            
+00001830  SHT$$INIT_ARRAY$$Limit                           
+000017d1  SVC_Handler                                      
+000017d1  SysTick_Handler                                  
+2000440c  SystemCoreClock                                  
 000000e5  SystemCoreClockUpdate                            
 00000359  SystemInit                                       
-0000079f  T32_INT1_IRQHandler                              
-0000079f  T32_INT1_IRQHandler                              
-00000f2d  T32_INT2_IRQHandler                              
-00000f2d  T32_INTC_IRQHandler                              
-00000f2d  TA0_0_IRQHandler                                 
-00000f2d  TA0_N_IRQHandler                                 
-00000f2d  TA1_0_IRQHandler                                 
-00000f2d  TA1_N_IRQHandler                                 
-00000f2d  TA2_0_IRQHandler                                 
-00000f2d  TA2_N_IRQHandler                                 
-00000f2d  TA3_0_IRQHandler                                 
-00000f2d  TA3_N_IRQHandler                                 
-00000f2d  UsageFault_Handler                               
+00000aa7  T32_INT1_IRQHandler                              
+00000aa7  T32_INT1_IRQHandler                              
+000017d1  T32_INT2_IRQHandler                              
+000017d1  T32_INTC_IRQHandler                              
+000017d1  TA0_0_IRQHandler                                 
+000017d1  TA0_N_IRQHandler                                 
+000017d1  TA1_0_IRQHandler                                 
+000017d1  TA1_N_IRQHandler                                 
+000017d1  TA2_0_IRQHandler                                 
+000017d1  TA2_N_IRQHandler                                 
+000017d1  TA3_0_IRQHandler                                 
+000017d1  TA3_N_IRQHandler                                 
+000017d1  UsageFault_Handler                               
 4000480c  WDTCTL_SYM                                       
-00000f2d  WDT_A_IRQHandler                                 
-0000076b  _Z5Setupv                                        
-00000ef7  _ZN10__cxxabiv117__class_type_infoD0Ev           
-00000f75  _ZN10__cxxabiv117__class_type_infoD1Ev           
-00000f75  _ZN10__cxxabiv117__class_type_infoD2Ev           
-00000f05  _ZN10__cxxabiv120__si_class_type_infoD0Ev        
-00000f79  _ZN10__cxxabiv120__si_class_type_infoD1Ev        
-00000f79  _ZN10__cxxabiv120__si_class_type_infoD2Ev        
-00000cf1  _ZN3LED3runEv                                    
-00000d09  _ZN3LED5setupEv                                  
-00000cd1  _ZN3LEDC1Et                                      
-00000cd1  _ZN3LEDC2Et                                      
-00000c8d  _ZN4Task10getMessageEh                           
-00000ca3  _ZN4Task11sendMessageE10st_Message               
-200043ee  _ZN4Task14m_u8NextTaskIDE                        
-00000f2f  _ZN4Task3runEv                                   
-00000f3b  _ZN4Task5setupEv                                 
-00000c61  _ZN4TaskC1Ev                                     
-00000c61  _ZN4TaskC2Ev                                     
-000008d3  _ZN6ADC_en3runEv                                 
-000008eb  _ZN6ADC_en5setupEv                               
-000008b3  _ZN6ADC_enC1Et                                   
-000008b3  _ZN6ADC_enC2Et                                   
-00000a35  _ZN7Mailbox10getMailboxEv                        
-00000aa1  _ZN7Mailbox10getMessageEh                        
-00000a61  _ZN7Mailbox11sendMessageE10st_Message            
-20004404  _ZN7Mailbox7MailObjE                             
-00000f47  _ZN7MailboxC1Ev                                  
-00000659  _ZN9Scheduler21CalculateNextScheduleEv           
-00000665  _ZN9Scheduler22SortScheduleByPriorityEP4Task     
-000004ed  _ZN9Scheduler3runEv                              
-0000060d  _ZN9Scheduler5setupEv                            
-00000453  _ZN9Scheduler6attachEP4Task8TaskType10TaskActivey
-00000411  _ZN9SchedulerC1Ev                                
-00000411  _ZN9SchedulerC2Ev                                
-00000673  _ZNSt9type_infoD1Ev                              
-00000673  _ZNSt9type_infoD2Ev                              
-00000f55  _ZSt15get_new_handlerv                           
-00000f85  _ZSt17__throw_bad_allocv                         
-00001030  _ZTI3LED                                         
-00001060  _ZTI4Task                                        
-0000103c  _ZTI6ADC_en                                      
-00001048  _ZTIN10__cxxabiv117__class_type_infoE            
-00001054  _ZTIN10__cxxabiv120__si_class_type_infoE         
-00001068  _ZTISt9type_info                                 
-0000107e  _ZTS3LED                                         
-00001078  _ZTS4Task                                        
-00001070  _ZTS6ADC_en                                      
-00000fad  _ZTSN10__cxxabiv117__class_type_infoE            
-00000f88  _ZTSN10__cxxabiv120__si_class_type_infoE         
-00001020  _ZTSSt9type_info                                 
-00000fd0  _ZTV3LED                                         
-00000fe0  _ZTV4Task                                        
-00000ff0  _ZTV6ADC_en                                      
-00001000  _ZTVN10__cxxabiv117__class_type_infoE            
-00001010  _ZTVN10__cxxabiv120__si_class_type_infoE         
-00000f6d  _ZdlPv                                           
-00000f7d  _ZdlPvj                                          
-00000ed5  _Znwj                                            
+000017d1  WDT_A_IRQHandler                                 
+00000a73  _Z5Setupv                                        
+0000179b  _ZN10__cxxabiv117__class_type_infoD0Ev           
+00001819  _ZN10__cxxabiv117__class_type_infoD1Ev           
+00001819  _ZN10__cxxabiv117__class_type_infoD2Ev           
+000017a9  _ZN10__cxxabiv120__si_class_type_infoD0Ev        
+0000181d  _ZN10__cxxabiv120__si_class_type_infoD1Ev        
+0000181d  _ZN10__cxxabiv120__si_class_type_infoD2Ev        
+0000151d  _ZN3LED3runEv                                    
+00001535  _ZN3LED5setupEv                                  
+000014fd  _ZN3LEDC1Et                                      
+000014fd  _ZN3LEDC2Et                                      
+000014b9  _ZN4Task10getMessageEh                           
+000014cf  _ZN4Task11sendMessageE10st_Message               
+200043f0  _ZN4Task14m_u8NextTaskIDE                        
+000017d3  _ZN4Task3runEv                                   
+000017df  _ZN4Task5setupEv                                 
+0000148d  _ZN4TaskC1Ev                                     
+0000148d  _ZN4TaskC2Ev                                     
+00000ec7  _ZN6ADC_en3runEv                                 
+00000edf  _ZN6ADC_en5setupEv                               
+00000ea7  _ZN6ADC_enC1Et                                   
+00000ea7  _ZN6ADC_enC2Et                                   
+000011dd  _ZN7Mailbox10getMailboxEv                        
+00001249  _ZN7Mailbox10getMessageEh                        
+00001209  _ZN7Mailbox11sendMessageE10st_Message            
+20004408  _ZN7Mailbox7MailObjE                             
+000017eb  _ZN7MailboxC1Ev                                  
+00001145  _ZN9AngleCalc3runEv                              
+000011a9  _ZN9AngleCalc5setupEv                            
+00001125  _ZN9AngleCalcC1Et                                
+00001125  _ZN9AngleCalcC2Et                                
+00000945  _ZN9Scheduler21CalculateNextScheduleEv           
+00000951  _ZN9Scheduler22SortScheduleByPriorityEP4Task     
+000007d9  _ZN9Scheduler3runEv                              
+000008f9  _ZN9Scheduler5setupEv                            
+0000073f  _ZN9Scheduler6attachEP4Task8TaskType10TaskActivey
+000006fd  _ZN9SchedulerC1Ev                                
+000006fd  _ZN9SchedulerC2Ev                                
+0000095f  _ZNSt9type_infoD1Ev                              
+0000095f  _ZNSt9type_infoD2Ev                              
+000017f9  _ZSt15get_new_handlerv                           
+00001829  _ZSt17__throw_bad_allocv                         
+00001980  _ZTI3LED                                         
+000019c8  _ZTI4Task                                        
+0000198c  _ZTI6ADC_en                                      
+00001998  _ZTI9AngleCalc                                   
+000019a4  _ZTIN10__cxxabiv117__class_type_infoE            
+000019b0  _ZTIN10__cxxabiv120__si_class_type_infoE         
+000019d0  _ZTISt9type_info                                 
+000019e6  _ZTS3LED                                         
+000019e0  _ZTS4Task                                        
+000019d8  _ZTS6ADC_en                                      
+000019bc  _ZTS9AngleCalc                                   
+000018ed  _ZTSN10__cxxabiv117__class_type_infoE            
+000018c8  _ZTSN10__cxxabiv120__si_class_type_infoE         
+00001970  _ZTSSt9type_info                                 
+00001910  _ZTV3LED                                         
+00001920  _ZTV4Task                                        
+00001930  _ZTV6ADC_en                                      
+00001940  _ZTV9AngleCalc                                   
+00001950  _ZTVN10__cxxabiv117__class_type_infoE            
+00001960  _ZTVN10__cxxabiv120__si_class_type_infoE         
+00001811  _ZdlPv                                           
+00001821  _ZdlPvj                                          
+00001779  _Znwj                                            
 20010000  __STACK_END                                      
 00000200  __STACK_SIZE                                     
 00000400  __SYSMEM_SIZE                                    
-000010c0  __TI_CINIT_Base                                  
-000010d0  __TI_CINIT_Limit                                 
-000010a8  __TI_Handler_Table_Base                          
-000010b4  __TI_Handler_Table_Limit                         
-00000da1  __TI_auto_init_nobinit                           
-00000d39  __TI_decompress_lzss                             
-00000f13  __TI_decompress_none                             
+00001a28  __TI_CINIT_Base                                  
+00001a38  __TI_CINIT_Limit                                 
+00001a10  __TI_Handler_Table_Base                          
+00001a1c  __TI_Handler_Table_Limit                         
+000015cd  __TI_auto_init_nobinit                           
+00001565  __TI_decompress_lzss                             
+000017b7  __TI_decompress_none                             
 ffffffff  __TI_pprof_out_hndl                              
 ffffffff  __TI_prof_data_size                              
 ffffffff  __TI_prof_data_start                             
 00000000  __TI_static_base__                               
-00000f61  __TI_zero_init                                   
-00000b6d  __aeabi_memclr                                   
-00000b6d  __aeabi_memclr4                                  
-00000b6d  __aeabi_memclr8                                  
-00000ad1  __aeabi_memcpy                                   
-00000ad1  __aeabi_memcpy4                                  
-00000ad1  __aeabi_memcpy8                                  
-00000b6f  __aeabi_memset                                   
-00000b6f  __aeabi_memset4                                  
-00000b6f  __aeabi_memset8                                  
+00001805  __TI_zero_init                                   
+00001315  __aeabi_cdrcmple                                 
+0000162d  __aeabi_d2iz                                     
+00000b5b  __aeabi_dadd                                     
+00000d07  __aeabi_ddiv                                     
+00000f51  __aeabi_dmul                                     
+00000b51  __aeabi_dsub                                     
+00001721  __aeabi_i2d                                      
+0000139b  __aeabi_memclr                                   
+0000139b  __aeabi_memclr4                                  
+0000139b  __aeabi_memclr8                                  
+00001279  __aeabi_memcpy                                   
+00001279  __aeabi_memcpy4                                  
+00001279  __aeabi_memcpy8                                  
+0000139d  __aeabi_memset                                   
+0000139d  __aeabi_memset4                                  
+0000139d  __aeabi_memset8                                  
 ffffffff  __binit__                                        
 ffffffff  __c_args__                                       
 UNDEFED   __mpu_init                                       
 2000fe00  __stack                                          
-000007eb  __sti___8_main_cpp_937618a8                      
-00000e3d  _c_int00_noargs                                  
-200043fc  _lock                                            
-00000be7  _nop                                             
+00000af3  __sti___8_main_cpp_937618a8                      
+000016b1  _c_int00_noargs                                  
+20004400  _lock                                            
+0000174f  _nop                                             
 20003fe0  _sys_memory                                      
 UNDEFED   _system_post_cinit                               
-00000f81  _system_pre_init                                 
-20004400  _unlock                                          
-00000f85  abort                                            
+00001825  _system_pre_init                                 
+20004404  _unlock                                          
+00001829  abort                                            
+00000411  atan                                             
+00000411  atanl                                            
 ffffffff  binit                                            
-0000095d  free                                             
+0000104d  free                                             
 20003fd8  g_Mailbox                                        
 20000000  g_MainScheduler                                  
 200043e8  g_i16AdcXResult                                  
 200043ea  g_i16AdcYResult                                  
 200043ec  g_i16AdcZResult                                  
+200043ee  g_iAngleResult                                   
 00000000  interruptVectors                                 
-000006df  main                                             
-00000be9  malloc                                           
-00000ad1  memcpy                                           
-00000b75  memset                                           
-00000e75  minit                                            
+000009cb  main                                             
+00001415  malloc                                           
+00001279  memcpy                                           
+000013a3  memset                                           
+000016e9  minit                                            
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -378,158 +416,175 @@ address   name
 00000200  __STACK_SIZE                                     
 00000359  SystemInit                                       
 00000400  __SYSMEM_SIZE                                    
-00000411  _ZN9SchedulerC1Ev                                
-00000411  _ZN9SchedulerC2Ev                                
-00000453  _ZN9Scheduler6attachEP4Task8TaskType10TaskActivey
-000004ed  _ZN9Scheduler3runEv                              
-0000060d  _ZN9Scheduler5setupEv                            
-00000659  _ZN9Scheduler21CalculateNextScheduleEv           
-00000665  _ZN9Scheduler22SortScheduleByPriorityEP4Task     
-00000673  _ZNSt9type_infoD1Ev                              
-00000673  _ZNSt9type_infoD2Ev                              
-000006df  main                                             
-0000076b  _Z5Setupv                                        
-0000079f  T32_INT1_IRQHandler                              
-0000079f  T32_INT1_IRQHandler                              
-000007c7  ADC14_IRQHandler                                 
-000007c7  ADC14_IRQHandler                                 
-000007eb  __sti___8_main_cpp_937618a8                      
-000008b3  _ZN6ADC_enC1Et                                   
-000008b3  _ZN6ADC_enC2Et                                   
-000008d3  _ZN6ADC_en3runEv                                 
-000008eb  _ZN6ADC_en5setupEv                               
-0000095d  free                                             
-00000a35  _ZN7Mailbox10getMailboxEv                        
-00000a61  _ZN7Mailbox11sendMessageE10st_Message            
-00000aa1  _ZN7Mailbox10getMessageEh                        
-00000ad1  __aeabi_memcpy                                   
-00000ad1  __aeabi_memcpy4                                  
-00000ad1  __aeabi_memcpy8                                  
-00000ad1  memcpy                                           
-00000b6d  __aeabi_memclr                                   
-00000b6d  __aeabi_memclr4                                  
-00000b6d  __aeabi_memclr8                                  
-00000b6f  __aeabi_memset                                   
-00000b6f  __aeabi_memset4                                  
-00000b6f  __aeabi_memset8                                  
-00000b75  memset                                           
-00000be7  _nop                                             
-00000be9  malloc                                           
-00000c61  _ZN4TaskC1Ev                                     
-00000c61  _ZN4TaskC2Ev                                     
-00000c8d  _ZN4Task10getMessageEh                           
-00000ca3  _ZN4Task11sendMessageE10st_Message               
-00000cd1  _ZN3LEDC1Et                                      
-00000cd1  _ZN3LEDC2Et                                      
-00000cf1  _ZN3LED3runEv                                    
-00000d09  _ZN3LED5setupEv                                  
-00000d39  __TI_decompress_lzss                             
-00000da1  __TI_auto_init_nobinit                           
-00000e3d  _c_int00_noargs                                  
-00000e75  minit                                            
-00000ed5  _Znwj                                            
-00000ef7  _ZN10__cxxabiv117__class_type_infoD0Ev           
-00000f05  _ZN10__cxxabiv120__si_class_type_infoD0Ev        
-00000f13  __TI_decompress_none                             
-00000f21  Reset_Handler                                    
-00000f2d  AES256_IRQHandler                                
-00000f2d  BusFault_Handler                                 
-00000f2d  COMP_E0_IRQHandler                               
-00000f2d  COMP_E1_IRQHandler                               
-00000f2d  CS_IRQHandler                                    
-00000f2d  DMA_ERR_IRQHandler                               
-00000f2d  DMA_INT0_IRQHandler                              
-00000f2d  DMA_INT1_IRQHandler                              
-00000f2d  DMA_INT2_IRQHandler                              
-00000f2d  DMA_INT3_IRQHandler                              
-00000f2d  DebugMon_Handler                                 
-00000f2d  Default_Handler                                  
-00000f2d  EUSCIA0_IRQHandler                               
-00000f2d  EUSCIA1_IRQHandler                               
-00000f2d  EUSCIA2_IRQHandler                               
-00000f2d  EUSCIA3_IRQHandler                               
-00000f2d  EUSCIB0_IRQHandler                               
-00000f2d  EUSCIB1_IRQHandler                               
-00000f2d  EUSCIB2_IRQHandler                               
-00000f2d  EUSCIB3_IRQHandler                               
-00000f2d  FLCTL_IRQHandler                                 
-00000f2d  FPU_IRQHandler                                   
-00000f2d  HardFault_Handler                                
-00000f2d  MemManage_Handler                                
-00000f2d  NMI_Handler                                      
-00000f2d  PCM_IRQHandler                                   
-00000f2d  PORT1_IRQHandler                                 
-00000f2d  PORT2_IRQHandler                                 
-00000f2d  PORT3_IRQHandler                                 
-00000f2d  PORT4_IRQHandler                                 
-00000f2d  PORT5_IRQHandler                                 
-00000f2d  PORT6_IRQHandler                                 
-00000f2d  PSS_IRQHandler                                   
-00000f2d  PendSV_Handler                                   
-00000f2d  RTC_C_IRQHandler                                 
-00000f2d  SVC_Handler                                      
-00000f2d  SysTick_Handler                                  
-00000f2d  T32_INT2_IRQHandler                              
-00000f2d  T32_INTC_IRQHandler                              
-00000f2d  TA0_0_IRQHandler                                 
-00000f2d  TA0_N_IRQHandler                                 
-00000f2d  TA1_0_IRQHandler                                 
-00000f2d  TA1_N_IRQHandler                                 
-00000f2d  TA2_0_IRQHandler                                 
-00000f2d  TA2_N_IRQHandler                                 
-00000f2d  TA3_0_IRQHandler                                 
-00000f2d  TA3_N_IRQHandler                                 
-00000f2d  UsageFault_Handler                               
-00000f2d  WDT_A_IRQHandler                                 
-00000f2f  _ZN4Task3runEv                                   
-00000f3b  _ZN4Task5setupEv                                 
-00000f47  _ZN7MailboxC1Ev                                  
-00000f55  _ZSt15get_new_handlerv                           
-00000f61  __TI_zero_init                                   
-00000f6d  _ZdlPv                                           
-00000f75  _ZN10__cxxabiv117__class_type_infoD1Ev           
-00000f75  _ZN10__cxxabiv117__class_type_infoD2Ev           
-00000f79  _ZN10__cxxabiv120__si_class_type_infoD1Ev        
-00000f79  _ZN10__cxxabiv120__si_class_type_infoD2Ev        
-00000f7d  _ZdlPvj                                          
-00000f81  _system_pre_init                                 
-00000f85  C$$EXIT                                          
-00000f85  _ZSt17__throw_bad_allocv                         
-00000f85  abort                                            
-00000f88  _ZTSN10__cxxabiv120__si_class_type_infoE         
-00000fad  _ZTSN10__cxxabiv117__class_type_infoE            
-00000fd0  _ZTV3LED                                         
-00000fe0  _ZTV4Task                                        
-00000ff0  _ZTV6ADC_en                                      
-00001000  _ZTVN10__cxxabiv117__class_type_infoE            
-00001010  _ZTVN10__cxxabiv120__si_class_type_infoE         
-00001020  _ZTSSt9type_info                                 
-00001030  _ZTI3LED                                         
-0000103c  _ZTI6ADC_en                                      
-00001048  _ZTIN10__cxxabiv117__class_type_infoE            
-00001054  _ZTIN10__cxxabiv120__si_class_type_infoE         
-00001060  _ZTI4Task                                        
-00001068  _ZTISt9type_info                                 
-00001070  _ZTS6ADC_en                                      
-00001078  _ZTS4Task                                        
-0000107e  _ZTS3LED                                         
-00001084  SHT$$INIT_ARRAY$$Base                            
-00001088  SHT$$INIT_ARRAY$$Limit                           
-000010a8  __TI_Handler_Table_Base                          
-000010b4  __TI_Handler_Table_Limit                         
-000010c0  __TI_CINIT_Base                                  
-000010d0  __TI_CINIT_Limit                                 
+00000411  atan                                             
+00000411  atanl                                            
+000006fd  _ZN9SchedulerC1Ev                                
+000006fd  _ZN9SchedulerC2Ev                                
+0000073f  _ZN9Scheduler6attachEP4Task8TaskType10TaskActivey
+000007d9  _ZN9Scheduler3runEv                              
+000008f9  _ZN9Scheduler5setupEv                            
+00000945  _ZN9Scheduler21CalculateNextScheduleEv           
+00000951  _ZN9Scheduler22SortScheduleByPriorityEP4Task     
+0000095f  _ZNSt9type_infoD1Ev                              
+0000095f  _ZNSt9type_infoD2Ev                              
+000009cb  main                                             
+00000a73  _Z5Setupv                                        
+00000aa7  T32_INT1_IRQHandler                              
+00000aa7  T32_INT1_IRQHandler                              
+00000acf  ADC14_IRQHandler                                 
+00000acf  ADC14_IRQHandler                                 
+00000af3  __sti___8_main_cpp_937618a8                      
+00000b51  __aeabi_dsub                                     
+00000b5b  __aeabi_dadd                                     
+00000d07  __aeabi_ddiv                                     
+00000ea7  _ZN6ADC_enC1Et                                   
+00000ea7  _ZN6ADC_enC2Et                                   
+00000ec7  _ZN6ADC_en3runEv                                 
+00000edf  _ZN6ADC_en5setupEv                               
+00000f51  __aeabi_dmul                                     
+0000104d  free                                             
+00001125  _ZN9AngleCalcC1Et                                
+00001125  _ZN9AngleCalcC2Et                                
+00001145  _ZN9AngleCalc3runEv                              
+000011a9  _ZN9AngleCalc5setupEv                            
+000011dd  _ZN7Mailbox10getMailboxEv                        
+00001209  _ZN7Mailbox11sendMessageE10st_Message            
+00001249  _ZN7Mailbox10getMessageEh                        
+00001279  __aeabi_memcpy                                   
+00001279  __aeabi_memcpy4                                  
+00001279  __aeabi_memcpy8                                  
+00001279  memcpy                                           
+00001315  __aeabi_cdrcmple                                 
+0000139b  __aeabi_memclr                                   
+0000139b  __aeabi_memclr4                                  
+0000139b  __aeabi_memclr8                                  
+0000139d  __aeabi_memset                                   
+0000139d  __aeabi_memset4                                  
+0000139d  __aeabi_memset8                                  
+000013a3  memset                                           
+00001415  malloc                                           
+0000148d  _ZN4TaskC1Ev                                     
+0000148d  _ZN4TaskC2Ev                                     
+000014b9  _ZN4Task10getMessageEh                           
+000014cf  _ZN4Task11sendMessageE10st_Message               
+000014fd  _ZN3LEDC1Et                                      
+000014fd  _ZN3LEDC2Et                                      
+0000151d  _ZN3LED3runEv                                    
+00001535  _ZN3LED5setupEv                                  
+00001565  __TI_decompress_lzss                             
+000015cd  __TI_auto_init_nobinit                           
+0000162d  __aeabi_d2iz                                     
+000016b1  _c_int00_noargs                                  
+000016e9  minit                                            
+00001721  __aeabi_i2d                                      
+0000174f  _nop                                             
+00001779  _Znwj                                            
+0000179b  _ZN10__cxxabiv117__class_type_infoD0Ev           
+000017a9  _ZN10__cxxabiv120__si_class_type_infoD0Ev        
+000017b7  __TI_decompress_none                             
+000017c5  Reset_Handler                                    
+000017d1  AES256_IRQHandler                                
+000017d1  BusFault_Handler                                 
+000017d1  COMP_E0_IRQHandler                               
+000017d1  COMP_E1_IRQHandler                               
+000017d1  CS_IRQHandler                                    
+000017d1  DMA_ERR_IRQHandler                               
+000017d1  DMA_INT0_IRQHandler                              
+000017d1  DMA_INT1_IRQHandler                              
+000017d1  DMA_INT2_IRQHandler                              
+000017d1  DMA_INT3_IRQHandler                              
+000017d1  DebugMon_Handler                                 
+000017d1  Default_Handler                                  
+000017d1  EUSCIA0_IRQHandler                               
+000017d1  EUSCIA1_IRQHandler                               
+000017d1  EUSCIA2_IRQHandler                               
+000017d1  EUSCIA3_IRQHandler                               
+000017d1  EUSCIB0_IRQHandler                               
+000017d1  EUSCIB1_IRQHandler                               
+000017d1  EUSCIB2_IRQHandler                               
+000017d1  EUSCIB3_IRQHandler                               
+000017d1  FLCTL_IRQHandler                                 
+000017d1  FPU_IRQHandler                                   
+000017d1  HardFault_Handler                                
+000017d1  MemManage_Handler                                
+000017d1  NMI_Handler                                      
+000017d1  PCM_IRQHandler                                   
+000017d1  PORT1_IRQHandler                                 
+000017d1  PORT2_IRQHandler                                 
+000017d1  PORT3_IRQHandler                                 
+000017d1  PORT4_IRQHandler                                 
+000017d1  PORT5_IRQHandler                                 
+000017d1  PORT6_IRQHandler                                 
+000017d1  PSS_IRQHandler                                   
+000017d1  PendSV_Handler                                   
+000017d1  RTC_C_IRQHandler                                 
+000017d1  SVC_Handler                                      
+000017d1  SysTick_Handler                                  
+000017d1  T32_INT2_IRQHandler                              
+000017d1  T32_INTC_IRQHandler                              
+000017d1  TA0_0_IRQHandler                                 
+000017d1  TA0_N_IRQHandler                                 
+000017d1  TA1_0_IRQHandler                                 
+000017d1  TA1_N_IRQHandler                                 
+000017d1  TA2_0_IRQHandler                                 
+000017d1  TA2_N_IRQHandler                                 
+000017d1  TA3_0_IRQHandler                                 
+000017d1  TA3_N_IRQHandler                                 
+000017d1  UsageFault_Handler                               
+000017d1  WDT_A_IRQHandler                                 
+000017d3  _ZN4Task3runEv                                   
+000017df  _ZN4Task5setupEv                                 
+000017eb  _ZN7MailboxC1Ev                                  
+000017f9  _ZSt15get_new_handlerv                           
+00001805  __TI_zero_init                                   
+00001811  _ZdlPv                                           
+00001819  _ZN10__cxxabiv117__class_type_infoD1Ev           
+00001819  _ZN10__cxxabiv117__class_type_infoD2Ev           
+0000181d  _ZN10__cxxabiv120__si_class_type_infoD1Ev        
+0000181d  _ZN10__cxxabiv120__si_class_type_infoD2Ev        
+00001821  _ZdlPvj                                          
+00001825  _system_pre_init                                 
+00001829  C$$EXIT                                          
+00001829  _ZSt17__throw_bad_allocv                         
+00001829  abort                                            
+0000182c  SHT$$INIT_ARRAY$$Base                            
+00001830  SHT$$INIT_ARRAY$$Limit                           
+000018c8  _ZTSN10__cxxabiv120__si_class_type_infoE         
+000018ed  _ZTSN10__cxxabiv117__class_type_infoE            
+00001910  _ZTV3LED                                         
+00001920  _ZTV4Task                                        
+00001930  _ZTV6ADC_en                                      
+00001940  _ZTV9AngleCalc                                   
+00001950  _ZTVN10__cxxabiv117__class_type_infoE            
+00001960  _ZTVN10__cxxabiv120__si_class_type_infoE         
+00001970  _ZTSSt9type_info                                 
+00001980  _ZTI3LED                                         
+0000198c  _ZTI6ADC_en                                      
+00001998  _ZTI9AngleCalc                                   
+000019a4  _ZTIN10__cxxabiv117__class_type_infoE            
+000019b0  _ZTIN10__cxxabiv120__si_class_type_infoE         
+000019bc  _ZTS9AngleCalc                                   
+000019c8  _ZTI4Task                                        
+000019d0  _ZTISt9type_info                                 
+000019d8  _ZTS6ADC_en                                      
+000019e0  _ZTS4Task                                        
+000019e6  _ZTS3LED                                         
+00001a10  __TI_Handler_Table_Base                          
+00001a1c  __TI_Handler_Table_Limit                         
+00001a28  __TI_CINIT_Base                                  
+00001a38  __TI_CINIT_Limit                                 
 20000000  g_MainScheduler                                  
 20003fd8  g_Mailbox                                        
 20003fe0  _sys_memory                                      
 200043e8  g_i16AdcXResult                                  
 200043ea  g_i16AdcYResult                                  
 200043ec  g_i16AdcZResult                                  
-200043ee  _ZN4Task14m_u8NextTaskIDE                        
-200043fc  _lock                                            
-20004400  _unlock                                          
-20004404  _ZN7Mailbox7MailObjE                             
-20004408  SystemCoreClock                                  
+200043ee  g_iAngleResult                                   
+200043f0  _ZN4Task14m_u8NextTaskIDE                        
+20004400  _lock                                            
+20004404  _unlock                                          
+20004408  _ZN7Mailbox7MailObjE                             
+2000440c  SystemCoreClock                                  
 2000fe00  __stack                                          
 20010000  __STACK_END                                      
 4000480c  WDTCTL_SYM                                       
@@ -542,4 +597,4 @@ ffffffff  binit
 UNDEFED   __mpu_init                                       
 UNDEFED   _system_post_cinit                               
 
-[169 symbols]
+[186 symbols]
