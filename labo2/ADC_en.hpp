@@ -18,6 +18,7 @@ class ADC_en : public Task
         uint16_t m_u16BITNN;
         virtual uint8_t run(void);
         virtual uint8_t setup(void);
+        st_Message MessageADC;
     protected:
     private:
 

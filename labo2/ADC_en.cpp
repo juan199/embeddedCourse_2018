@@ -13,6 +13,25 @@ uint8_t ADC_en::run() // por qué estamos usando uint8_t?
 {
     // manda a correr al ADC
     ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC;
+
+    MessageADC.bMessageValid = true;
+    MessageADC.u8SourceID = this->m_u8TaskID;
+    //MessageADC.u32MessageData = Angle.m_u8TaskID;
+    MessageADC.u8DestinationID = 0;
+    sendMessage(MessageADC);
+
+    /*
+    {
+        bool     bMessageValid;   // - True when message is valid
+        uint8_t  u8DestinationID; // - Destination Task ID
+        uint8_t  u8SourceID;      // - Source Task ID
+        uint8_t  u8MessageCode;   // - Message code, interpreted by Destination
+        uint32_t u32MessageData;  // - Message data, interpreted by Destination
+        uint8_t * pPayload;       // - Message Payload, interpreted by Destination
+    };
+    */
+
+
     return(NO_ERR);
 }
 

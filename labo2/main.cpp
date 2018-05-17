@@ -57,6 +57,9 @@ void main(void)
     g_MainScheduler.attach(&Angle,TaskType_Periodic, TaskActiveTrue,32);
     // - Run the Setup for the scheduler and all tasks
     g_MainScheduler.setup();
+
+    UniqueADC.MessageADC.u8DestinationID = Angle.m_u8TaskID;
+
     // - Main Loop
     while(1)
     {
@@ -103,6 +106,7 @@ void Setup(void)
 	NVIC_EnableIRQ(T32_INT1_IRQn);
 	__enable_irq();
 
+
 	return;
 }
 
@@ -126,6 +130,11 @@ extern "C"
         g_i16AdcYResult = ADC14->MEM[1];
         g_i16AdcZResult = ADC14->MEM[2];
         ADC14->CLRIFGR0 = ADC14_CLRIFGR0_CLRIFG0 | ADC14_CLRIFGR0_CLRIFG1 | ADC14_CLRIFGR0_CLRIFG2;
+        // agregar la lógica para que envíe la info cuando los 3 ángulos
+        // hayan cambiado
+
+
+        //UniqueADC.sendMessage(MessageADC);
         __enable_irq();
         return;
     }
