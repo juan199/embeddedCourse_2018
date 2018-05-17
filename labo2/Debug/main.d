@@ -31,19 +31,6 @@ main.obj: /home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/linka
 main.obj: ../LED.hpp
 main.obj: ../ADC_en.hpp
 main.obj: ../AngleCalc.hpp
-main.obj: /home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/math.h
-main.obj: /home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/math.h
-main.obj: /home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/_defs.h
-main.obj: /home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/machine/_limits.h
-main.obj: /home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/type_traits
-main.obj: /home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/cstddef
-main.obj: /home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/stddef.h
-main.obj: /home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/__nullptr
-main.obj: /home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/limits
-main.obj: /home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/support/ti/__limit_defs.h
-main.obj: /home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/float.h
-main.obj: /home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/float.h
-main.obj: /home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/__undef_macros
 main.obj: ../global.hpp
 
 ../main.cpp: 
@@ -77,17 +64,4 @@ main.obj: ../global.hpp
 ../LED.hpp: 
 ../ADC_en.hpp: 
 ../AngleCalc.hpp: 
-/home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/math.h: 
-/home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/math.h: 
-/home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/_defs.h: 
-/home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/machine/_limits.h: 
-/home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/type_traits: 
-/home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/cstddef: 
-/home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/stddef.h: 
-/home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/__nullptr: 
-/home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/limits: 
-/home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/support/ti/__limit_defs.h: 
-/home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/float.h: 
-/home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/float.h: 
-/home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/__undef_macros: 
 ../global.hpp: 
