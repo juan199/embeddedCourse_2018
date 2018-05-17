@@ -7,21 +7,21 @@
 //constructor
 // hay algo que está mal, porque el constructor no
 // debería tener que revisar NADA en esta clase
-AngleCalc::AngleCalc(uint16_t i_BITN)
+AngleCalc::AngleCalc()
 {
-    m_u16BITNNN = i_BITN;
+    m_iAngleResult = 0U;
 };
 
 uint8_t AngleCalc::run() // por qué estamos usando uint8_t?
 {
     //AngleCalc::get_variables(int16_t adcX, int16_t adcY, int16_t adcZ);
-    g_iAngleResult = ((atan((double)g_i16AdcYResult / (double)g_i16AdcZResult)) * (180/PI));
+    m_iAngleResult = ((atan((double)g_i16AdcYResult / (double)g_i16AdcZResult)) * (180/PI));
 
-    if(g_iAngleResult > 0){
-        g_iAngleResult = -1*(g_iAngleResult - 90);
+    if(m_iAngleResult > 0){
+        m_iAngleResult = -1*(m_iAngleResult - 90);
     }
     else{
-        g_iAngleResult = -1*(g_iAngleResult + 90);
+        m_iAngleResult = -1*(m_iAngleResult + 90);
     }
 
     return(NO_ERR);

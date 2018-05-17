@@ -34,7 +34,7 @@ void main(void)
     LED BlueLED(BIT2);
     LED GreenLED(BIT1);
     ADC_en UniqueADC(BIT1);
-    AngleCalc Angle(BIT1);
+    AngleCalc Angle;
 
     // ponerle un encabezado: configura los pines del acelerómetro (pasar
     // al setup del ADC)
