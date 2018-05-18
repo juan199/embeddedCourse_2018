@@ -7,21 +7,44 @@
 ADC_en::ADC_en(uint16_t i_BITN)
 {
     m_u16BITNN = i_BITN;
+    m_i16AdcXResult = 0U;
+    m_i16AdcYResult = 0U;
+    m_i16AdcZResult = 0U;
+    m_iTickCount = 0;
 };
 
 uint8_t ADC_en::run() // por qué estamos usando uint8_t?
 {
     // manda a correr al ADC
     ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC;
+/*
+    int a = 4;
+    int b = 5;
+    ostringstream oss;
+    oss << a << b;
+    istringstream iss(oss.str());
+    int c;
+    iss >> c;
+*/
+    if (m_iTickCount == 32)
+    {
 
-    MessageADC.bMessageValid = true;
-    //MessageADC.u8DestinationID =
-    MessageADC.u8SourceID = this->m_u8TaskID;
-    //MessageADC.u8MessageCode =
-    MessageADC.u32MessageData = 99;
-    //MessageADC.pPayload =
+        MessageADC.bMessageValid = true;
+        //MessageADC.u8DestinationID =
+        MessageADC.u8SourceID = this->m_u8TaskID;
+        //MessageADC.u8MessageCode =
+        //MessageADC.u32MessageData =  m_i16AdcYResult; //(((double)m_i16AdcYResult / (double)m_i16AdcZResult));
+        //MessageADC.pPayload = &this->m_i16AdcZResult;
+        MessageADC.i16MessageData1 =  m_i16AdcYResult;
+        MessageADC.i16MessageData2 =  m_i16AdcZResult;
+        sendMessage(MessageADC);
+        m_iTickCount = 0;
+    } else {
+        m_iTickCount++;
+    }
 
-    sendMessage(MessageADC);
+
+
 
     /*
     {

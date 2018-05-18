@@ -7,6 +7,13 @@
 #include "AngleCalc.hpp"
 #include "global.hpp"
 
+/*
+#include <iostream>
+#include <sstream>
+#include <string>
+*/
+
+
 // ##########################
 // Global/Static declarations
 // ##########################
@@ -18,9 +25,12 @@ Scheduler g_MainScheduler; // - Instantiate a Scheduler
 
 
 // con signo
+/*
 int16_t g_i16AdcXResult = 0U;
 int16_t g_i16AdcYResult = 0U;
 int16_t g_i16AdcZResult = 0U;
+*/
+ADC_en UniqueADC(BIT1);
 
 // #########################
 //          MAIN
@@ -30,7 +40,7 @@ void main(void)
     // - Instantiate two new Tasks
     LED BlueLED(BIT2);
     LED GreenLED(BIT1);
-    ADC_en UniqueADC(BIT1);
+
     AngleCalc Angle;
 
     // ponerle un encabezado: configura los pines del acelerómetro (pasar
@@ -55,6 +65,7 @@ void main(void)
     // - Run the Setup for the scheduler and all tasks
     g_MainScheduler.setup();
 
+    //
     UniqueADC.MessageADC.u8DestinationID = Angle.m_u8TaskID;
 
     // - Main Loop
@@ -123,9 +134,9 @@ extern "C"
     {
         __disable_irq();
         // To get light sensor data
-        g_i16AdcXResult = ADC14->MEM[0];
-        g_i16AdcYResult = ADC14->MEM[1];
-        g_i16AdcZResult = ADC14->MEM[2];
+        UniqueADC.m_i16AdcXResult = ADC14->MEM[0];
+        UniqueADC.m_i16AdcYResult = ADC14->MEM[1];
+        UniqueADC.m_i16AdcZResult = ADC14->MEM[2];
         ADC14->CLRIFGR0 = ADC14_CLRIFGR0_CLRIFG0 | ADC14_CLRIFGR0_CLRIFG1 | ADC14_CLRIFGR0_CLRIFG2;
         // agregar la lógica para que envíe la info cuando los 3 ángulos
         // hayan cambiado

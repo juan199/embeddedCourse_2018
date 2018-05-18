@@ -17,7 +17,9 @@ struct st_Message
     uint8_t  u8SourceID;      // - Source Task ID
     uint8_t  u8MessageCode;   // - Message code, interpreted by Destination
     uint32_t u32MessageData;  // - Message data, interpreted by Destination
-    uint8_t * pPayload;       // - Message Payload, interpreted by Destination
+    int16_t i16MessageData1;  // - Message data, interpreted by Destination
+    int16_t i16MessageData2;  // - Message data, interpreted by Destination
+    int16_t * pPayload;       // - Message Payload, interpreted by Destination
 };
 
 class Mailbox

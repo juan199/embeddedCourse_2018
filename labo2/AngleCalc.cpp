@@ -15,8 +15,9 @@ AngleCalc::AngleCalc()
 uint8_t AngleCalc::run() // por qué estamos usando uint8_t?
 {
     //AngleCalc::get_variables(int16_t adcX, int16_t adcY, int16_t adcZ);
-    m_iAngleResult = ((atan((double)g_i16AdcYResult / (double)g_i16AdcZResult)) * (180/PI));
-
+    MessageAngleCalc_Rx = getMessage(this->m_u8TaskID);
+    m_iAngleResult = ((atan((double)MessageAngleCalc_Rx.i16MessageData1 / (double)MessageAngleCalc_Rx.i16MessageData2) * (180/PI)));
+    //m_iAngleResult = ((atan((double)MessageAngleCalc_Rx.i16MessageData1 / (double)MessageAngleCalc_Rx.PAYLOADSIN*&) * (180/PI)));
     if(m_iAngleResult > 0){
         m_iAngleResult = -1*(m_iAngleResult - 90);
     }
