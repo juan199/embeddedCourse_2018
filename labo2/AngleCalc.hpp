@@ -10,9 +10,10 @@ class AngleCalc : public Task
         AngleCalc();
         virtual uint8_t run(void);
         virtual uint8_t setup(void);
+        int16_t m_iAngleResult;
     protected:
     private:
-        int16_t m_iAngleResult;
+
 };
 
 

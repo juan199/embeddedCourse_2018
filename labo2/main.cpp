@@ -22,9 +22,6 @@ int16_t g_i16AdcXResult = 0U;
 int16_t g_i16AdcYResult = 0U;
 int16_t g_i16AdcZResult = 0U;
 
-//pasar a la clase del AngleCalc
-int16_t g_iAngleResult = 0U;
-
 // #########################
 //          MAIN
 // #########################
