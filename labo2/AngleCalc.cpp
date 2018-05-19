@@ -10,11 +10,11 @@ AngleCalc::AngleCalc()
 
 uint8_t AngleCalc::run() // por qué estamos usando uint8_t?
 {
-    MessageAngleCalc_Rx = getMessage(this->m_u8TaskID);
-    if (MessageAngleCalc_Rx.bMessageValid == true)
+    st_taskMessage = getMessage(this->m_u8TaskID);
+    if (st_taskMessage.bMessageValid == true)
     {
 
-        m_iAngleResult = ((atan((double)MessageAngleCalc_Rx.i16MessageData / (double)*MessageAngleCalc_Rx.pPayload) * (180/PI)));
+        m_iAngleResult = ((atan((double)st_taskMessage.i16MessageData1 / (double)*st_taskMessage.pPayload) * (180/PI)));
         if(m_iAngleResult > 0){
             m_iAngleResult = -1*(m_iAngleResult - 90);
         }

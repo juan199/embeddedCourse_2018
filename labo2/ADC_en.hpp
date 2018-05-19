@@ -17,7 +17,7 @@ class ADC_en : public Task
         ADC_en();
         virtual uint8_t run(void);
         virtual uint8_t setup(void);
-        st_Message MessageADC;
+        //st_Message MessageADC;
         int16_t m_i16AdcXResult;
         int16_t m_i16AdcYResult;
         int16_t m_i16AdcZResult;

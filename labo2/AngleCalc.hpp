@@ -11,7 +11,7 @@ class AngleCalc : public Task
         virtual uint8_t run(void);
         virtual uint8_t setup(void);
         int16_t m_iAngleResult;
-        st_Message MessageAngleCalc_Rx;
+        //st_Message MessageAngleCalc_Rx;
     protected:
     private:
 

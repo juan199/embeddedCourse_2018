@@ -6,6 +6,7 @@ Task::Task()
     m_u8NextTaskID++;
     m_bIsFinished = false;
     m_pMailbox = Mailbox::getMailbox();
+    st_taskMessage.bMessageValid = false;
 }
 
 st_Message Task::getMessage(uint8_t i_u8TaskID)

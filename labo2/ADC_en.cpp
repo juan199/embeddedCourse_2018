@@ -20,15 +20,15 @@ uint8_t ADC_en::run() // por qué estamos usando uint8_t?
     if (m_iTickCount == 32)
     {
 
-        MessageADC.bMessageValid = true;
+        st_taskMessage.bMessageValid = true;
         //MessageADC.u8DestinationID =
-        MessageADC.u8SourceID = this->m_u8TaskID;
+        st_taskMessage.u8SourceID = this->m_u8TaskID;
         //MessageADC.u8MessageCode =
         //MessageADC.u32MessageData =  m_i16AdcYResult; //(((double)m_i16AdcYResult / (double)m_i16AdcZResult));
-        MessageADC.pPayload = &m_i16AdcZResult;
-        MessageADC.i16MessageData1 =  m_i16AdcYResult;
-        MessageADC.i16MessageData2 =  m_i16AdcZResult;
-        sendMessage(MessageADC);
+        st_taskMessage.pPayload = &m_i16AdcZResult;
+        st_taskMessage.i16MessageData1 =  m_i16AdcYResult;
+        st_taskMessage.i16MessageData2 =  m_i16AdcZResult;
+        sendMessage(st_taskMessage);
         m_iTickCount = 0;
     } else {
         m_iTickCount++;

@@ -12,14 +12,14 @@
 
 struct st_Message
 {
-    bool     bMessageValid;   // - True when message is valid
-    uint8_t  u8DestinationID; // - Destination Task ID
-    uint8_t  u8SourceID;      // - Source Task ID
-    uint8_t  u8MessageCode;   // - Message code, interpreted by Destination
-    uint32_t u32MessageData;  // - Message data, interpreted by Destination
-    int16_t i16MessageData1;  // - Message data, interpreted by Destination
-    int16_t i16MessageData2;  // - Message data, interpreted by Destination
-    int16_t * pPayload;       // - Message Payload, interpreted by Destination
+    bool     bMessageValid = false;   // - True when message is valid
+    uint8_t  u8DestinationID = 0U; // - Destination Task ID
+    uint8_t  u8SourceID = 0U;      // - Source Task ID
+    uint8_t  u8MessageCode = 0U;   // - Message code, interpreted by Destination
+    uint32_t u32MessageData = 0U;  // - Message data, interpreted by Destination
+    int16_t i16MessageData1 = 0;  // - Message data, interpreted by Destination
+    int16_t i16MessageData2 = 0;  // - Message data, interpreted by Destination
+    int16_t * pPayload = (uintptr_t) 0;       // - Message Payload, interpreted by Destination
 };
 
 class Mailbox
