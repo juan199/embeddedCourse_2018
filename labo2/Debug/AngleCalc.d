@@ -38,7 +38,6 @@ AngleCalc.obj: /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/
 AngleCalc.obj: /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/float.h
 AngleCalc.obj: /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/float.h
 AngleCalc.obj: /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/__undef_macros
-AngleCalc.obj: ../global.hpp
 
 ../AngleCalc.cpp: 
 ../AngleCalc.hpp: 
@@ -78,4 +77,3 @@ AngleCalc.obj: ../global.hpp
 /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/float.h: 
 /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/float.h: 
 /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/libcxx/__undef_macros: 
-../global.hpp: 

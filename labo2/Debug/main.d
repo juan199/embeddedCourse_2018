@@ -31,7 +31,6 @@ main.obj: /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/linka
 main.obj: ../LED.hpp
 main.obj: ../ADC_en.hpp
 main.obj: ../AngleCalc.hpp
-main.obj: ../global.hpp
 
 ../main.cpp: 
 /home/sama/ti/ccsv7/ccs_base/arm/include/msp.h: 
@@ -64,4 +63,3 @@ main.obj: ../global.hpp
 ../LED.hpp: 
 ../ADC_en.hpp: 
 ../AngleCalc.hpp: 
-../global.hpp: 

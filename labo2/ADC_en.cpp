@@ -4,12 +4,11 @@
 // hay algo que está mal, porque el constructor no
 // debería tener que revisar NADA en esta clase
 
-ADC_en::ADC_en(uint16_t i_BITN)
+ADC_en::ADC_en()
 {
-    m_u16BITNN = i_BITN;
-    m_i16AdcXResult = 0U;
-    m_i16AdcYResult = 0U;
-    m_i16AdcZResult = 0U;
+    m_i16AdcXResult = 0;
+    m_i16AdcYResult = 0;
+    m_i16AdcZResult = 0;
     m_iTickCount = 0;
 };
 
@@ -17,15 +16,7 @@ uint8_t ADC_en::run() // por qué estamos usando uint8_t?
 {
     // manda a correr al ADC
     ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC;
-/*
-    int a = 4;
-    int b = 5;
-    ostringstream oss;
-    oss << a << b;
-    istringstream iss(oss.str());
-    int c;
-    iss >> c;
-*/
+
     if (m_iTickCount == 32)
     {
 
@@ -34,7 +25,7 @@ uint8_t ADC_en::run() // por qué estamos usando uint8_t?
         MessageADC.u8SourceID = this->m_u8TaskID;
         //MessageADC.u8MessageCode =
         //MessageADC.u32MessageData =  m_i16AdcYResult; //(((double)m_i16AdcYResult / (double)m_i16AdcZResult));
-        //MessageADC.pPayload = &this->m_i16AdcZResult;
+        MessageADC.pPayload = &m_i16AdcZResult;
         MessageADC.i16MessageData1 =  m_i16AdcYResult;
         MessageADC.i16MessageData2 =  m_i16AdcZResult;
         sendMessage(MessageADC);
@@ -42,21 +33,6 @@ uint8_t ADC_en::run() // por qué estamos usando uint8_t?
     } else {
         m_iTickCount++;
     }
-
-
-
-
-    /*
-    {
-        bool     bMessageValid;   // - True when message is valid
-        uint8_t  u8DestinationID; // - Destination Task ID
-        uint8_t  u8SourceID;      // - Source Task ID
-        uint8_t  u8MessageCode;   // - Message code, interpreted by Destination
-        uint32_t u32MessageData;  // - Message data, interpreted by Destination
-        uint8_t * pPayload;       // - Message Payload, interpreted by Destination
-    };
-    */
-
 
     return(NO_ERR);
 }

@@ -5,14 +5,6 @@
 #include "LED.hpp"
 #include "ADC_en.hpp"
 #include "AngleCalc.hpp"
-#include "global.hpp"
-
-/*
-#include <iostream>
-#include <sstream>
-#include <string>
-*/
-
 
 // ##########################
 // Global/Static declarations
@@ -23,14 +15,7 @@ volatile static uint64_t g_SystemTicks = 0; // - The system counter.
 Mailbox* g_Mailbox = Mailbox::getMailbox();
 Scheduler g_MainScheduler; // - Instantiate a Scheduler
 
-
-// con signo
-/*
-int16_t g_i16AdcXResult = 0U;
-int16_t g_i16AdcYResult = 0U;
-int16_t g_i16AdcZResult = 0U;
-*/
-ADC_en UniqueADC(BIT1);
+ADC_en UniqueADC;
 
 // #########################
 //          MAIN
@@ -43,29 +28,18 @@ void main(void)
 
     AngleCalc Angle;
 
-    // ponerle un encabezado: configura los pines del acelerómetro (pasar
-    // al setup del ADC)
-    /*
-    P4->SEL0 = BIT0 | BIT2;
-    P4->SEL1 = BIT0 | BIT2;
-    P4->DIR &= ~(BIT0 | BIT2);
-    P6->SEL0 = BIT1;
-    P6->SEL1 = BIT1;
-    P6->DIR &= ~BIT1;
-    */
-
     // - Run the overall setup function for the system
     Setup();
     // - Attach the Tasks to the Scheduler;
     g_MainScheduler.attach(&BlueLED,TaskType_Periodic, TaskActiveTrue,500);
-    g_MainScheduler.attach(&GreenLED, TaskType_Periodic,TaskActiveFalse,600); // cambiar a True con un botón
-    //g_MainScheduler.attach(&UniqueADC,TaskType_Periodic, TaskActiveTrue,1);
+    g_MainScheduler.attach(&GreenLED, TaskType_Periodic,TaskActiveFalse,600);
     g_MainScheduler.attach(&UniqueADC,TaskType_Always, TaskActiveTrue);
     g_MainScheduler.attach(&Angle,TaskType_Periodic, TaskActiveTrue,32);
+
     // - Run the Setup for the scheduler and all tasks
     g_MainScheduler.setup();
 
-    //
+    // aquii se definen los destinos de cada task!
     UniqueADC.MessageADC.u8DestinationID = Angle.m_u8TaskID;
 
     // - Main Loop
@@ -133,16 +107,10 @@ extern "C"
     void ADC14_IRQHandler(void)
     {
         __disable_irq();
-        // To get light sensor data
         UniqueADC.m_i16AdcXResult = ADC14->MEM[0];
         UniqueADC.m_i16AdcYResult = ADC14->MEM[1];
         UniqueADC.m_i16AdcZResult = ADC14->MEM[2];
         ADC14->CLRIFGR0 = ADC14_CLRIFGR0_CLRIFG0 | ADC14_CLRIFGR0_CLRIFG1 | ADC14_CLRIFGR0_CLRIFG2;
-        // agregar la lógica para que envíe la info cuando los 3 ángulos
-        // hayan cambiado
-
-
-        //UniqueADC.sendMessage(MessageADC);
         __enable_irq();
         return;
     }
