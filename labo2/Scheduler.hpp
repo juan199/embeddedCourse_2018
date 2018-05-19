@@ -58,6 +58,7 @@ private:
     uint8_t SortScheduleByPriority(Task * i_pSchedule); // - Sorts a schedule based on priority (not implemented)
     uintptr_t m_pNextSchedule; // - Pointer to the next schedule.
     Mailbox* m_pMailbox;
+    uint8_t DefineDestination(Task * t_source, T * t_destination) // Function that attaches destinations
 };
 
 

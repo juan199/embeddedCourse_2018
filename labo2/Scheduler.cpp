@@ -113,6 +113,12 @@ uint8_t Scheduler::setup(void)
     return l_u8ReturnCode;
 }
 
+uint8_t Scheduler::DefineDestination(Task * t_source, Task * t_destination){
+    // UniqueADC.MessageADC.u8DestinationID = Angle.m_u8TaskID;
+
+}
+
+
 uint8_t Scheduler::CalculateNextSchedule(void)
 {
     return(NO_ERR);
