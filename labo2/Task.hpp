@@ -19,6 +19,7 @@ class Task
 		void                SetTaskPriority(uint8_t i_u8NewPriority){m_u8Priority = i_u8NewPriority;};
 		st_Message          getMessage(uint8_t i_u8TaskID);
 		st_Message          st_taskMessage;
+		st_Message          st_taskMessage_Rx;
 		bool                sendMessage(st_Message i_stMessage);
 
 	private:

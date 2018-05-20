@@ -9,6 +9,7 @@ CPP_SRCS += \
 ../LED.cpp \
 ../Mailbox.cpp \
 ../Scheduler.cpp \
+../ScreenWriter.cpp \
 ../Task.cpp \
 ../main.cpp 
 
@@ -29,6 +30,7 @@ OBJS += \
 ./LED.obj \
 ./Mailbox.obj \
 ./Scheduler.obj \
+./ScreenWriter.obj \
 ./Task.obj \
 ./main.obj \
 ./startup_msp432p401r_ccs.obj \
@@ -40,6 +42,7 @@ CPP_DEPS += \
 ./LED.d \
 ./Mailbox.d \
 ./Scheduler.d \
+./ScreenWriter.d \
 ./Task.d \
 ./main.d 
 
@@ -49,6 +52,7 @@ OBJS__QUOTED += \
 "LED.obj" \
 "Mailbox.obj" \
 "Scheduler.obj" \
+"ScreenWriter.obj" \
 "Task.obj" \
 "main.obj" \
 "startup_msp432p401r_ccs.obj" \
@@ -64,6 +68,7 @@ CPP_DEPS__QUOTED += \
 "LED.d" \
 "Mailbox.d" \
 "Scheduler.d" \
+"ScreenWriter.d" \
 "Task.d" \
 "main.d" 
 
@@ -72,6 +77,7 @@ CPP_SRCS__QUOTED += \
 "../AngleCalc.cpp" \
 "../LED.cpp" \
 "../Scheduler.cpp" \
+"../ScreenWriter.cpp" \
 "../Task.cpp" \
 "../main.cpp" 
 
