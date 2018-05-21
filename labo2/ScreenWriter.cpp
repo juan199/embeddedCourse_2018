@@ -39,48 +39,48 @@ uint8_t ScreenWriter::run()
         resultado1 = m_i16currentAngle - m_i16lastAngle;
         m_i16lastAngle = m_i16currentAngle;
 
-        if (abs(resultado1) > 1)
+        if((3 < m_i16currentAngle) && (m_i16currentAngle < 177))
         {
             BlueRect.yMin = 0;
             BlueRect.yMax = 127 + (m_i16currentAngle * -0.70555555);
             GreenRect.yMin = BlueRect.yMax + 1;
             GreenRect.yMax = 127;
         }
+        else if ((183 < m_i16currentAngle) && (m_i16currentAngle< 357))
+        {
+            //BlueRect.yMin = 0;
+            //BlueRect.yMax = (m_i16currentAngle * 0.70555555)-127;
+            //GreenRect.yMin = BlueRect.yMax + 1;
+            //GreenRect.yMax = 127;
 
-        /*
-        if(resultado1 > 0){
-            if (m_i16currentAngle > 0) {
-                BlueRect.yMin = 0;
-                BlueRect.yMax = 63 + (m_i16currentAngle * 0.7);
-                GreenRect.yMin = BlueRect.yMax + 1;
-                GreenRect.yMax = 127;
-            } else {
-                BlueRect.yMin = 0;
-                BlueRect.yMax = (90-(-1*m_i16currentAngle) * 0.7);
-                GreenRect.yMin = BlueRect.yMax + 1;
-                GreenRect.yMax = 127;
-            }
-        } else if (resultado1 < 0) {
-            if (m_i16currentAngle > 0) {
-                BlueRect.yMin = 0;
-                BlueRect.yMax = 63 + (m_i16currentAngle * 0.7);
-                GreenRect.yMin = BlueRect.yMax + 1;
-                GreenRect.yMax = 127;
-            } else {
-                BlueRect.yMin = 0;
-                BlueRect.yMax = (90-(-1*m_i16currentAngle) * 0.7);
-                GreenRect.yMin = BlueRect.yMax+1;
-                GreenRect.yMax = 127;
-            }
-        }*/
-        //Graphics_clearDisplay(&g_sContext);
-        //Graphics_setBackgroundColor(&g_sContext, GRAPHICS_COLOR_RED);
+            //GreenRect.yMin = 0;
+            //GreenRect.yMax = (m_i16currentAngle * 0.70555555)-127;
+            BlueRect.yMax = 127;
+            BlueRect.yMin = 254 + (m_i16currentAngle *-0.70555555);
+            GreenRect.yMin = 0;
+            GreenRect.yMax = BlueRect.yMin - 1;
+
+        }
+        else if((m_i16currentAngle <= 3) || ((m_i16currentAngle >= 357)))
+        {
+            BlueRect.yMin = 0;
+            BlueRect.yMax = 127;
+            GreenRect.yMin = 128;
+            GreenRect.yMax = 128;
+        }
+        else if((177 <= m_i16currentAngle) && (m_i16currentAngle <= 183))
+        {
+            BlueRect.yMin = 128;
+            BlueRect.yMax = 128;
+            GreenRect.yMin = 0;
+            GreenRect.yMax = 127;
+        }
+
         Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_BLUE);
         Graphics_fillRectangle(&g_sContext, &BlueRect);
         Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_GREEN);
         Graphics_fillRectangle(&g_sContext, &GreenRect);
-        //Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_WHITE);
-        Graphics_drawLineH(&g_sContext, 0, 127, BlueRect.yMax);
+
     }
 
 

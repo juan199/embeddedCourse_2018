@@ -7,13 +7,6 @@
 #include "ScreenWriter.hpp"
 #include "AngleCalc.hpp"
 
-extern "C"
-{
-#include <driverlib.h>
-#include <grlib.h>
-#include "Crystalfontz128x128_ST7735.h"
-#include <stdio.h>
-}
 
 //#include "msp.h"
 
@@ -31,45 +24,11 @@ ADC_en UniqueADC;
 
 
 
-
-/* ADC results buffer */
-//static uint16_t resultsBuffer[3];
-
-//void drawTitle(void);
-
-Graphics_Rectangle drawRect;
-Graphics_Rectangle drawRect2;
-
-
-
 // #########################
 //          MAIN
 // #########################
 void main(void)
 {
-    /*
-    drawRect.xMin = 0;
-    drawRect.xMax = 127;
-
-    drawRect.yMin = 0;
-    drawRect.yMax = 64;
-
-    drawRect2.xMin = 0;
-    drawRect2.xMax = 70;
-
-    drawRect2.yMin = 0;
-    drawRect2.yMax = 40;
-
-    Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_BLUE);
-    Graphics_setBackgroundColor(&g_sContext, GRAPHICS_COLOR_BROWN);
-
-    Graphics_fillRectangle(&g_sContext, &drawRect);
-    Graphics_setBackgroundColor(&g_sContext, GRAPHICS_COLOR_BROWN);
-    Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_RED);
-    Graphics_fillRectangle(&g_sContext, &drawRect2);
-    Graphics_drawLine(&g_sContext,0,64,127,84);
-    Graphics_drawLineH(&g_sContext, 0, 127, 90);
-    */
     // - Instantiate two new Tasks
     LED BlueLED(BIT2);
     LED GreenLED(BIT1);
