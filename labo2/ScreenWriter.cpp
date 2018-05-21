@@ -79,7 +79,7 @@ uint8_t ScreenWriter::run()
         Graphics_fillRectangle(&g_sContext, &BlueRect);
         Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_GREEN);
         Graphics_fillRectangle(&g_sContext, &GreenRect);
-        Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_WHITE);
+        //Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_WHITE);
         Graphics_drawLineH(&g_sContext, 0, 127, BlueRect.yMax);
     }
 
