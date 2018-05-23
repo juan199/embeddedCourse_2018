@@ -1,10 +1,3 @@
-/*
- * Mailbox.cpp
- *
- *  Created on: May 1, 2018
- *      Author: eortiz
- */
-
 #include <Mailbox.hpp>
 
 Mailbox* Mailbox::MailObj = nullptr;

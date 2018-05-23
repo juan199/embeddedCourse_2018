@@ -20,9 +20,8 @@ volatile static uint64_t g_SystemTicks = 0; // - The system counter.
 Mailbox* g_Mailbox = Mailbox::getMailbox();
 Scheduler g_MainScheduler; // - Instantiate a Scheduler
 
+// - Instantiate a new task
 ADC_en UniqueADC;
-
-
 
 // #########################
 //          MAIN

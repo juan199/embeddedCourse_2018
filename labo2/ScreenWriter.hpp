@@ -1,13 +1,6 @@
-/*
- * ScreenWriter.hpp
- *
- *  Created on: May 19, 2018
- *      Author: sama
- */
-
 #ifndef SCREENWRITER_HPP_
 #define SCREENWRITER_HPP_
-#define __NOP __nop // qué hace esto?
+#define __NOP __nop
 #include "msp.h"
 #include "Task.hpp"
 

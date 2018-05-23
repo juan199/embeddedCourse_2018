@@ -1,10 +1,3 @@
-/*
- * LED.hpp
- *
- *  Created on: Aug 31, 2016
- *      Author: eortiz
- */
-
 #ifndef LED_HPP_
 #define LED_HPP_
 #define __NOP __nop

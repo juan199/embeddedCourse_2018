@@ -1,10 +1,3 @@
-/*
- * Scheduler.hpp
- *
- *  Created on: Aug 31, 2016
- *      Author: eortiz
- */
-
 #ifndef TASKS_SCHEDULER_HPP_
 #define TASKS_SCHEDULER_HPP_
 #include "msp.h"

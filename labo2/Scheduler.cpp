@@ -113,8 +113,8 @@ uint8_t Scheduler::setup(void)
     return l_u8ReturnCode;
 }
 
+// - Define the destination and source between task's messages
 uint8_t Scheduler::DefineDestination(Task * t_source, Task * t_destination){
-    // UniqueADC.MessageADC.u8DestinationID = Angle.m_u8TaskID;
     t_source->st_taskMessage.u8DestinationID = t_destination->m_u8TaskID;
     return(NO_ERR);
 }

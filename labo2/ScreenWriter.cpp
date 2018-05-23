@@ -9,7 +9,7 @@ extern "C"
 
 
 
-//constructor
+// - ScreenWriter constructor
 ScreenWriter::ScreenWriter()
 {
     m_i16lastAngle = 0;
@@ -25,6 +25,7 @@ ScreenWriter::ScreenWriter()
 
 uint8_t ScreenWriter::run()
 {
+    // - Define the coordinates of the rectangles to paint in the screen
     st_taskMessage = getMessage(this->m_u8TaskID);
     if (st_taskMessage.bMessageValid == true)
     {
@@ -60,6 +61,7 @@ uint8_t ScreenWriter::run()
             GreenRect.yMax = 127;
         }
 
+        // - Draw rectangles according to the angle data received
         Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_BLUE);
         Graphics_fillRectangle(&g_sContext, &BlueRect);
         Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_GREEN);

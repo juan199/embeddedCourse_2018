@@ -1,10 +1,3 @@
-/*
- * Mailbox.hpp
- *
- *  Created on: May 1, 2018
- *      Author: eortiz
- */
-
 #ifndef MAILBOX_HPP_
 #define MAILBOX_HPP_
 #include "msp.h"
