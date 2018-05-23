@@ -30,22 +30,17 @@ ADC_en UniqueADC;
 void main(void)
 {
     // - Instantiate two new Tasks
-    LED BlueLED(BIT2);
-    LED GreenLED(BIT1);
-
     AngleCalc Angle;
     ScreenWriter Screen;
 
     // - Run the overall setup function for the system
     Setup();
     // - Attach the Tasks to the Scheduler;
-    g_MainScheduler.attach(&BlueLED,TaskType_Periodic, TaskActiveTrue,500);
-    g_MainScheduler.attach(&GreenLED, TaskType_Periodic,TaskActiveFalse,600);
     g_MainScheduler.attach(&UniqueADC,TaskType_Always, TaskActiveTrue);
     g_MainScheduler.attach(&Angle,TaskType_Periodic, TaskActiveTrue,32);
     g_MainScheduler.attach(&Screen,TaskType_Periodic, TaskActiveTrue,64);
 
-    // aquii se definen los destinos de cada task!
+    // Define task's Destination
     g_MainScheduler.DefineDestination(&UniqueADC, &Angle);
     g_MainScheduler.DefineDestination(&Angle, &Screen);
 
@@ -94,7 +89,7 @@ void Setup(void)
 	// - Enable the interrupt in the NVIC
 	// - Start the timer in UP mode.
 	// - Re-enable interrupts
-	TIMER32_1->LOAD = 0x0000BB80; //~1ms ---> a 3Mhz
+	TIMER32_1->LOAD = 0x0000BB80; //~1ms ---> a 48Mhz
 	//0x00000BB8 para 1ms a 3 MHz
 	//0x0000BB80 para 1ms a 48
 	TIMER32_1->CONTROL = TIMER32_CONTROL_SIZE | TIMER32_CONTROL_PRESCALE_0 | TIMER32_CONTROL_MODE | TIMER32_CONTROL_IE | TIMER32_CONTROL_ENABLE;
