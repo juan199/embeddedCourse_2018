@@ -1,9 +1,3 @@
-/*
- * ScreenWriter.cpp
- *
- *  Created on: May 19, 2018
- *      Author: sama
- */
 #include "ScreenWriter.hpp"
 extern "C"
 {
@@ -35,9 +29,6 @@ uint8_t ScreenWriter::run()
     if (st_taskMessage.bMessageValid == true)
     {
         m_i16currentAngle = st_taskMessage.i16MessageData1;
-        //resultado2 = m_i16currentAngle + 90;
-        resultado1 = m_i16currentAngle - m_i16lastAngle;
-        m_i16lastAngle = m_i16currentAngle;
 
         if((3 < m_i16currentAngle) && (m_i16currentAngle < 177))
         {
@@ -48,13 +39,6 @@ uint8_t ScreenWriter::run()
         }
         else if ((183 < m_i16currentAngle) && (m_i16currentAngle< 357))
         {
-            //BlueRect.yMin = 0;
-            //BlueRect.yMax = (m_i16currentAngle * 0.70555555)-127;
-            //GreenRect.yMin = BlueRect.yMax + 1;
-            //GreenRect.yMax = 127;
-
-            //GreenRect.yMin = 0;
-            //GreenRect.yMax = (m_i16currentAngle * 0.70555555)-127;
             BlueRect.yMax = 127;
             BlueRect.yMin = 254 + (m_i16currentAngle *-0.70555555);
             GreenRect.yMin = 0;

@@ -8,7 +8,7 @@ AngleCalc::AngleCalc()
     m_iAngleResult = 0U;
 };
 
-uint8_t AngleCalc::run() // por qué estamos usando uint8_t?
+uint8_t AngleCalc::run()
 {
     st_taskMessage_Rx = getMessage(this->m_u8TaskID);
     if (st_taskMessage_Rx.bMessageValid == true)
@@ -30,29 +30,6 @@ uint8_t AngleCalc::run() // por qué estamos usando uint8_t?
         {
             m_iAngleResult = -1*((atan((double)*st_taskMessage_Rx.pPayload /(double)st_taskMessage_Rx.i16MessageData1) * (180/PI))) + 270;
         }
-
-
-
-        /*
-        if (*st_taskMessage_Rx.pPayload > 0)
-        {
-            m_iAngleResult = -1*((atan((double)*st_taskMessage_Rx.pPayload /(double)st_taskMessage_Rx.i16MessageData1) * (180/PI))) + 90;
-        }
-        else
-        {
-            m_iAngleResult = ((atan((double)st_taskMessage_Rx.i16MessageData1 / (double)*st_taskMessage_Rx.pPayload) * (180/PI)));
-        }*/
-
-
-         /*
-        if ((*st_taskMessage_Rx.pPayload > 0)  && (st_taskMessage_Rx.i16MessageData1 > 0))
-        {
-            m_iAngleResult = 180;
-        }
-        else if ((*st_taskMessage_Rx.pPayload < 0)  && (st_taskMessage_Rx.i16MessageData1 > 0))
-        {
-            m_iAngleResult = 0;
-        }*/
 
         st_taskMessage.bMessageValid = true;
         st_taskMessage.u8SourceID = this->m_u8TaskID;

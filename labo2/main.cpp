@@ -46,10 +46,8 @@ void main(void)
     g_MainScheduler.attach(&Screen,TaskType_Periodic, TaskActiveTrue,64);
 
     // aquii se definen los destinos de cada task!
-    //UniqueADC.MessageADC.u8DestinationID = Angle.m_u8TaskID;
     g_MainScheduler.DefineDestination(&UniqueADC, &Angle);
     g_MainScheduler.DefineDestination(&Angle, &Screen);
-    //Angle.st_taskMessage.u8DestinationID = Screen.m_u8TaskID;
 
     // - Run the Setup for the scheduler and all tasks
     g_MainScheduler.setup();
