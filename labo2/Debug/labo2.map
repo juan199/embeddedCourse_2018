@@ -1,7 +1,7 @@
 ******************************************************************************
                   TI ARM Linker Unix v18.1.1                   
 ******************************************************************************
->> Linked Wed May 23 12:22:22 2018
+>> Linked Wed May 23 16:16:48 2018
 
 OUTPUT FILE NAME:   <labo2.out>
 ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 00003f6d
@@ -230,7 +230,7 @@ MODULE SUMMARY
     +--+----------------------------------------------------+-------+---------+---------+
        Total:                                               4434    172       552    
                                                                                      
-    /home/juan/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/lib/rtsv7M4_T_le_v4SPD16_eabi.lib
+    /home/sama/ti/ccsv7/tools/compiler/ti-cgt-arm_18.1.1.LTS/lib/rtsv7M4_T_le_v4SPD16_eabi.lib
        s_atan.c.obj                                         748     152       0      
        memory.c.obj                                         492     0         24     
        fd_add_t2.asm.obj                                    438     0         0      
